@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Profitbricks
@@ -95,27 +96,68 @@ namespace Profitbricks
         /// <summary>
         /// <para type="description">The amount of memory for the server in MB, e.g. 2048. Size must be specified in multiples of 256 MB with a minimum of 256 MB. However, if you set ramHotPlug to TRUE then you must use a minimum of 1024 MB. Mandatory parameter.</para>
         /// </summary>
-        [Parameter(Position = 3, HelpMessage = "The amount of memory for the server in MB, e.g. 2048.Size must be specified in multiples of 256 MB with a minimum of 256 MB; however, if you set ramHotPlug to TRUE then you must use a minimum of 1024 MB.",
-            Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Position = 3, HelpMessage = "The amount of memory for the server in MB, e.g. 2048.Size must be specified in multiples of 256 MB with a minimum of 256 MB; however, if you set ramHotPlug to TRUE then you must use a minimum of 1024 MB.", Mandatory = true, ValueFromPipeline = true)]
         public int Ram { get; set; }
 
         /// <summary>
+        /// <para type="description">Image or snapshot ID</para>
+        /// </summary>
+        [Parameter(Position = 4, HelpMessage = "Image or snapshot ID", Mandatory = true, ValueFromPipeline = true)]
+        public string ImageId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Sets Public Ip address for the server.</para>
+        /// </summary>
+        [Parameter(Position = 5, HelpMessage = "Sets public Ip address for the server.", Mandatory = true, ValueFromPipeline = true)]
+        public bool PublicIp { get; set; }
+
+        /// <summary>
+        /// <para type="description">Sets Public Ip address for the server.</para>
+        /// </summary>
+        [Parameter(Position = 6, HelpMessage = "Sets static Ip address for the server.", Mandatory = true, ValueFromPipeline = true)]
+        public bool StaticIp { get; set; }
+
+
+        /// <summary>
+        /// <para type="description">SSH key to allow access to the volume via SSH</para>
+        /// </summary>
+        [Parameter(Position = 7, HelpMessage = "SSH key to allow access to the volume via SSH.", ValueFromPipeline = true)]
+        public string SshKey { get; set; }
+        /// <summary>
         /// <para type="description">The availability zone in which the server should exist. AUTO, ZONE_1, ZONE_2.</para>
         /// </summary>
-        [Parameter(Position = 4, HelpMessage = "The availability zone in which the server should exist. AUTO, ZONE_1, ZONE_2", ValueFromPipeline = true)]
+        [Parameter(Position = 8, HelpMessage = "The availability zone in which the server should exist. AUTO, ZONE_1, ZONE_2", ValueFromPipeline = true)]
         public string AvailabilityZone { get; set; }
 
         /// <summary>
         /// <para type="description">Reference to a volume used for booting. If not ‘null’ then bootCdrom has to be ‘null’.</para>
         /// </summary>
-        [Parameter(Position = 5, HelpMessage = "Reference to a Volume used for booting. If not ‘null’ then bootCdrom has to be ‘null’.", ValueFromPipeline = true)]
+        [Parameter(Position = 9, HelpMessage = "Reference to a Volume used for booting. If not ‘null’ then bootCdrom has to be ‘null’.", ValueFromPipeline = true)]
         public string BootVolume { get; set; }
 
         /// <summary>
         /// <para type="description">Reference to a CD-ROM used for booting. If not 'null' then bootVolume has to be 'null'.</para>
         /// </summary>
-        [Parameter(Position = 6, HelpMessage = "Reference to a CD-ROM used for booting. If not 'null' then bootVolume has to be 'null'.", ValueFromPipeline = true)]
+        [Parameter(Position = 10, HelpMessage = "Reference to a CD-ROM used for booting. If not 'null' then bootVolume has to be 'null'.", ValueFromPipeline = true)]
         public string BootCDRom { get; set; }
+
+        /// <summary>
+        /// <para type="description">Volume size. Default value 20gb.</para>
+        /// </summary>
+        [Parameter(Position = 11, HelpMessage = "Volume size. Default value 20gb.", ValueFromPipeline = true)]
+        public long Size { get; set; }
+
+        /// <summary>
+        /// <para type="description">Disk type. Default value HDD.</para>
+        /// </summary>
+        [Parameter(Position = 12, HelpMessage = "Disk type. Default value HDD.", ValueFromPipeline = true)]
+        public string DiskType { get; set; }
+
+        /// <summary>
+        /// <para type="description">One-time password for the image. Only these characters are allowed: [abcdefghjkmnpqrstuvxABCDEFGHJKLMNPQRSTUVX23456789]</para>
+        /// </summary>
+        [Parameter(Position = 13, HelpMessage = "One-time password for the Image. Only these characters are allowed: [abcdefghjkmnpqrstuvxABCDEFGHJKLMNPQRSTUVX23456789]", ValueFromPipeline = true)]
+        public string Password { get; set; }
 
         #endregion
 
@@ -123,7 +165,14 @@ namespace Profitbricks
         {
             try
             {
+                var dcApi = new DataCenterApi(Utilities.Configuration);
                 var serverApi = new ServerApi(Utilities.Configuration);
+                var volumeApi = new VolumeApi(Utilities.Configuration);
+                var attachedVolumesApi = new AttachedVolumesApi(Utilities.Configuration);
+
+                var datacenter = dcApi.FindById(DataCenterId, depth: 5);
+
+                int ram = (int)this.Ram;
 
                 var server = new Server
                 {
@@ -131,9 +180,15 @@ namespace Profitbricks
                     {
                         Name = this.Name,
                         Cores = this.Cores,
-                        Ram = this.Ram
+                        Ram = ram / 1024 / 1024
                     }
                 };
+
+                var newServer = serverApi.Create(this.DataCenterId, server);
+
+                WriteVerbose("Creating the server...");
+
+                Utilities.DoWait(newServer.Request);
 
                 if (!string.IsNullOrEmpty(this.AvailabilityZone))
                 {
@@ -150,8 +205,85 @@ namespace Profitbricks
                     server.Properties.BootCdrom = new ResourceReference { Id = this.BootCDRom };
                 }
 
-                var resp = serverApi.Create(this.DataCenterId, server);
-                WriteObject(resp);
+                long size = Size;
+                size = size == 0 ? 21474836480 : Size;
+
+                var volume = new Volume
+                {
+                    Properties = new VolumeProperties
+                    {
+                        Size = (int)(size / 1024 / 1024 / 1024),
+                        Image = ImageId,
+                        Type = (string.IsNullOrEmpty(DiskType) ? "HDD" : DiskType),
+                        Name = Name,
+                    }
+                };
+
+                if (!string.IsNullOrEmpty(SshKey))
+                {
+                    volume.Properties.SshKeys = new List<string> { SshKey };
+                }
+
+                if (!string.IsNullOrEmpty(Password))
+                {
+                    volume.Properties.ImagePassword = Password;
+                }
+
+                WriteVerbose("Creating the volume...");
+                volume = volumeApi.Create(this.DataCenterId, volume);
+
+                Utilities.DoWait(volume.Request);
+
+                var attachedVol = attachedVolumesApi.AttachVolume(DataCenterId, newServer.Id, new Volume { Id = volume.Id });
+
+
+
+                if (this.PublicIp)
+                {
+                    var nic = new Nic
+                    {
+                        Properties = new NicProperties
+                        {
+                            Lan = 1,
+                        }
+                    };
+                    var nicApi = new NetworkInterfacesApi(Utilities.Configuration);
+
+                    if (this.StaticIp)
+                    {
+                        var ipblockApi = new IPBlocksApi(Utilities.Configuration);
+
+                        var ipblock = new IpBlock
+                        {
+                            Properties = new IpBlockProperties
+                            {
+                                Location = datacenter.Properties.Location,
+                                Size = 1
+                            }
+                        };
+                        WriteVerbose("Creating a static IP address");
+                        ipblock = ipblockApi.Create(ipblock);
+
+
+                        Utilities.DoWait(ipblock.Request);
+                        nic.Properties.Ips = ipblock.Properties.Ips;
+
+                    }
+
+                    WriteVerbose("Creating a nic.");
+                    nic = nicApi.Create(DataCenterId, newServer.Id, nic);
+
+                    Utilities.DoWait(nic.Request);
+                }
+
+                server = serverApi.FindById(datacenter.Id, newServer.Id, depth: 5);
+
+                datacenter = dcApi.FindById(DataCenterId, depth: 5);
+                
+                server = serverApi.FindById(datacenter.Id, newServer.Id, depth: 5);
+                
+
+                WriteObject(server);
 
             }
             catch (Exception ex)
