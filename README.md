@@ -116,36 +116,63 @@ Get-Datacenter -DataCenterId [dbe936f8-a536-49c5-b864-cec842e3ee65]
 Next we will create a server in the data center. This time we have to pass the 'Id' for the data center, along with some other relevant properties (processor cores, memory, boot volume or boot CD-ROM) for the new server.
 
 ```
-$server = New-PBServer -DataCenterId $datacenter.Id -Name "server_test" -Cores 1 -Ram 256 
+$server = New-PBServer -DataCenterId [UUID] -ImageId [UUID] -Cores 1 -Ram 1gb -Name test1234 -PublicIp $true -StaticIp $true -Verbose
 $server
 ```
 
 ```
-Id         : 3e7c254f-aeb6-481e-a594-1267cc19cac5
+VERBOSE: Creating the server...
+VERBOSE: Creating the volume...
+VERBOSE: Creating the static IP address
+VERBOSE: Creating the nic.
+
+Id         : 5bcba46e-47cc-42fa-9c7d-52852088c5b5
 Type       : server
-Href       : https://api.profitbricks.com/rest/v2/datacenters/dbe936f8-a536-49c5-b864-cec842e3ee65/servers/3e7c254f-aeb6-481e-a594-1267cc19cac5
+Href       : https://api.profitbricks.com/rest/v2/datacenters/e12e545e-1f27-4cb0-87ac-97078dbb9923/servers/5bcba46e-47cc-42fa-9c7d-52852088c5b5
 Metadata   : class DatacenterElementMetadata {
-               CreatedDate: 5/5/2016 10:45:29 AM
+               CreatedDate: 5/11/2016 10:51:11 AM
                CreatedBy: jasmin.gacic@gmail.com
-               Etag: b4046bb75c48ce7bce9cb6ab3e82ae91
-               LastModifiedDate: 5/5/2016 10:45:29 AM
+               Etag: 23732a5ff98b1b9873f19e520730d553
+               LastModifiedDate: 5/11/2016 10:51:11 AM
                LastModifiedBy: user@domain.com
-               State: BUSY
+               State: AVAILABLE
              }
              
 Properties : class ServerProperties {
-               Name: server_test
+               Name: test1234
                Cores: 1
-               Ram: 256
-               AvailabilityZone: 
-               VmState: 
+               Ram: 1024
+               AvailabilityZone: AUTO
+               VmState: RUNNING
                BootCdrom: 
                BootVolume: 
              }
              
-Entities   : 
-Request    : https://api.profitbricks.com/rest/v2/requests/3e72e83b-6e8b-43c4-bccb-97ce084292bf/status
-
+Entities   : class ServerEntities {
+               Cdroms: class Cdroms {
+               Id: 5bcba46e-47cc-42fa-9c7d-52852088c5b5/cdroms
+               Type: collection
+               Href: https://api.profitbricks.com/rest/v2/datacenters/e12e545e-1f27-4cb0-87ac-97078dbb9923/servers/5bcba46e-47cc-42fa-9c7d-52852088c5b5/cdroms
+               Items: System.Collections.Generic.List`1[Model.Image]
+             }
+             
+               Volumes: class AttachedVolumes {
+               Id: 5bcba46e-47cc-42fa-9c7d-52852088c5b5/volumes
+               Type: collection
+               Href: https://api.profitbricks.com/rest/v2/datacenters/e12e545e-1f27-4cb0-87ac-97078dbb9923/servers/5bcba46e-47cc-42fa-9c7d-52852088c5b5/volumes
+               Items: System.Collections.Generic.List`1[Model.Volume]
+             }
+             
+               Nics: class Nics {
+               Id: 5bcba46e-47cc-42fa-9c7d-52852088c5b5/nics
+               Type: collection
+               Href: https://api.profitbricks.com/rest/v2/datacenters/e12e545e-1f27-4cb0-87ac-97078dbb9923/servers/5bcba46e-47cc-42fa-9c7d-52852088c5b5/nics
+               Items: System.Collections.Generic.List`1[Model.Nic]
+             }
+             
+             }
+             
+Request    : 
 ```
 
 ### Update Server

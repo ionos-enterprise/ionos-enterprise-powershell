@@ -261,7 +261,7 @@ namespace Profitbricks
                                 Size = 1
                             }
                         };
-                        WriteVerbose("Creating a static IP address");
+                        WriteVerbose("Creating the static IP address...");
                         ipblock = ipblockApi.Create(ipblock);
 
 
@@ -270,7 +270,7 @@ namespace Profitbricks
 
                     }
 
-                    WriteVerbose("Creating a nic.");
+                    WriteVerbose("Creating the nic...");
                     nic = nicApi.Create(DataCenterId, newServer.Id, nic);
 
                     Utilities.DoWait(nic.Request);
