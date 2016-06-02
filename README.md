@@ -30,7 +30,7 @@ Before you begin you will need to have [signed up](https://www.profitbricks.com/
 
 ## Installation
 
-Prerequisit for Profitbricks Powershell Module is .Net 4.5 Framework or higher. You can download .Net 4.5 Framework from [here](https://www.microsoft.com/en-us/download/details.aspx?id=40779).
+Profitbricks Powershell Module requires .NET Framework 4.5 or higher.  You can download .NET Framework version 4.5 from [here](https://www.microsoft.com/en-us/download/details.aspx?id=40779).
 
 Download the [Profitbricks.zip](https://github.com/profitbricks/profitbricks-powershell/releases/download/v1.0.0/Profitbricks.zip) file and extract all. Use one of the following options to make the module available for PowerShell:
 
