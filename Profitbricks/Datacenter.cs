@@ -9,7 +9,7 @@ using Client;
 using Api;
 using System.Runtime.InteropServices;
 
-namespace Profitbricks
+namespace ProfitBricks
 {
     /// <summary>
     /// <para type="synopsis">This commandlet will get one or a list of virtual data centers from your ProfitBricks instance.</para>

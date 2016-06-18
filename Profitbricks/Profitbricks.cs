@@ -8,7 +8,7 @@ using System.Management.Automation;
 using System.Security;
 using System.Text;
 
-namespace Profitbricks
+namespace ProfitBricks
 {
     /// <summary>
     /// <para type="synopsis">This is the cmdlet which sets ProfitBricks credentials.</para>
@@ -19,9 +19,9 @@ namespace Profitbricks
     ///   Set-Profitbricks -Credential $credential
     ///   </code>
     /// </example>
-    [Cmdlet(VerbsCommon.Set, "Profitbricks")]
-    [Alias("Set Profitbricks Credentials")]
-    public class SetProfitbricks : Cmdlet
+    [Cmdlet(VerbsCommon.Set, "ProfitBricks")]
+    [Alias("Set ProfitBricks Credentials")]
+    public class SetProfitBricks : Cmdlet
     {
         #region Parameters
 

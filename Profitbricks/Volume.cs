@@ -7,10 +7,10 @@ using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Profitbricks
+namespace ProfitBricks
 {
     /// <summary>
-    /// <para type="synopsis">This commandlet will get a list of volumes attached to the server.</para>
+    /// <para type="synopsis">This commandlet will get a list of volumes connected to the server.</para>
     /// </summary>
     /// <example>
     /// <para type="description">Get-PBAttachedVolume -DataCenterId [UUID] -ServerId [UUID]</para>
@@ -53,7 +53,7 @@ namespace Profitbricks
     }
 
     /// <summary>
-    /// <para type="synopsis">This commandlet will get one or a list of volumes attached from a given virtual data center.</para>
+    /// <para type="synopsis">This commandlet will get one or a list of volumes connected from a given virtual data center.</para>
     /// </summary>
     /// <example>
     /// <para type="description">Get-PBVolume -DataCenterId [UUID] -VolumeId [UUID]</para>
@@ -232,14 +232,14 @@ namespace Profitbricks
     }
 
     /// <summary>
-    /// <para type="synopsis">This commandlet will attach a pre-existing storage volume to the server.</para>
+    /// <para type="synopsis">This commandlet will connect a pre-existing storage volume to the server.</para>
     /// </summary>
     /// <example>
-    /// <para type="description">Attach-PBVolume -DataCenterId [UUID] -ServerId [UUID] -VolumeId [UUID]</para>
+    /// <para type="description">Connect-PBVolume -DataCenterId [UUID] -ServerId [UUID] -VolumeId [UUID]</para>
     /// </example>
-    [Cmdlet("Attach", "PBVolume")]
+    [Cmdlet(VerbsCommunications.Connect, "PBVolume")]
     [OutputType(typeof(Volume))]
-    public class AttachVolume : Cmdlet
+    public class ConnectVolume : Cmdlet
     {
         #region Parameters 
 
@@ -284,11 +284,11 @@ namespace Profitbricks
     /// <para type="synopsis">This commandlet will detach the volume from the server.</para>
     /// </summary>
     /// <example>
-    /// <para type="description">Detach-PBVolume -DataCenterId [UUID] -ServerId [UUID] -VolumeId [UUID]</para>
+    /// <para type="description">Disconnect-PBVolume -DataCenterId [UUID] -ServerId [UUID] -VolumeId [UUID]</para>
     /// </example>
-    [Cmdlet("Detach", "PBVolume")]
+    [Cmdlet(VerbsCommunications.Disconnect, "PBVolume")]
     [OutputType(typeof(Volume))]
-    public class DetachVolume : Cmdlet
+    public class DisconnectVolume : Cmdlet
     {
         #region Parameters 
 
@@ -320,7 +320,7 @@ namespace Profitbricks
 
                 var newVolume = attachedVolumesApi.DetachVolume(this.DataCenterId, this.ServerId, this.VolumeId);
 
-                WriteObject("Volume detached");
+                WriteObject("Volume disconnected");
             }
             catch (Exception ex)
             {
@@ -363,7 +363,7 @@ namespace Profitbricks
 
                 var newVolume = volumeApi.Delete(this.DataCenterId, this.VolumeId);
 
-                WriteObject("Volume detached");
+                WriteObject("Volume removed");
             }
             catch (Exception ex)
             {

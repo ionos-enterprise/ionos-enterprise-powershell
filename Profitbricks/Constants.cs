@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Profitbricks
+namespace ProfitBricks
 {
     public class Utilities
     {

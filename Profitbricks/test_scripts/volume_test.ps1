@@ -55,29 +55,29 @@ else
 "Update failed"
 }
 
-#attach the volume
-$attachedvolume = Attach-PBVolume -DataCenterId $datacenter.Id -ServerId $newServer.Id -VolumeId $volume.Id
+#connect the volume
+$connectedvolume = Connect-PBVolume -DataCenterId $datacenter.Id -ServerId $newServer.Id -VolumeId $volume.Id
 
 Do{
-"Waiting on volume to attach"
+"Waiting on volume to conect"
 
-$volumestatus = Get-PBRequestStatus -RequestUrl $attachedvolume.Request
+$volumestatus = Get-PBRequestStatus -RequestUrl $connectedvolume.Request
 
  start-sleep -seconds 5
 }While($volumestatus.Metadata.Status -ne "DONE")
 
 $volumes = Get-PBAttachedVolume -DataCenterId $datacenter.Id -ServerId $newServer.Id
 
-if( $volumes.Item(0).Id -eq $attachedvolume.Id)
+if( $volumes.Item(0).Id -eq $connectedvolume.Id)
 {
-"Successfully attached to the server" 
+"Successfully connected to the server" 
 }
 else
 {
 "It failed"
 }
 
-Detach-PBVolume -DataCenterId $datacenter.Id -ServerId $newServer.Id -VolumeId $attachedvolume.Id
+Detach-PBVolume -DataCenterId $datacenter.Id -ServerId $newServer.Id -VolumeId $connectedvolume.Id
 
 Remove-PBDatacenter -DatacenterId $datacenter.Id
 

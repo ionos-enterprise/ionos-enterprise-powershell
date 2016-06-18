@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Profitbricks
+namespace ProfitBricks
 {
     /// <summary>
     /// <para type="synopsis">This commandlet will get one or a list of servers associated with the virtual data center.</para>
@@ -420,11 +420,11 @@ namespace Profitbricks
     /// <para type="synopsis">This commandlet will reboot the server instance.</para>
     /// </summary>
     /// <example>
-    /// <para type="description">Stop-PBServer -DataCenterId [UUID] -ServerId [UUID]</para>
+    /// <para type="description">Reset-PBServer -DataCenterId [UUID] -ServerId [UUID]</para>
     /// </example>
-    [Cmdlet("Reboot", "PBServer")]
+    [Cmdlet(VerbsCommon.Reset, "PBServer")]
     [OutputType(typeof(Server))]
-    public class RebootServer : Cmdlet
+    public class ResetServer : Cmdlet
     {
         #region Parameters
 

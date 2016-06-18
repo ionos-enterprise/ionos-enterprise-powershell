@@ -7,7 +7,7 @@ using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Profitbricks
+namespace ProfitBricks
 {
     /// <summary>
     /// <para type="synopsis">This commandlet will retrieve the status of the request.</para>

@@ -7,7 +7,7 @@ using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Profitbricks
+namespace ProfitBricks
 {
     /// <summary>
     /// <para type="synopsis">This commandlet retrieves a list of load balancers within the virtual data center.</para>
@@ -88,7 +88,7 @@ namespace Profitbricks
         public string Name { get; set; }
 
         /// <summary>
-        /// <para type="description">IPv4 address of the load balancer. All attached NICs will inherit this IP.	</para>
+        /// <para type="description">IPv4 address of the load balancer. All connected NICs will inherit this IP.	</para>
         /// </summary>
         [Parameter(Position = 2, HelpMessage = "IPv4 address of the loadbalancer.", ValueFromPipeline = true)]
         public string Ip { get; set; }

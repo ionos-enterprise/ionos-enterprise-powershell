@@ -8,13 +8,15 @@
     <ProjectGuid>{B9B7AA4B-2FAD-4B5A-BF64-4556E14FF5DF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Profitbricks</RootNamespace>
-    <AssemblyName>Profitbricks</AssemblyName>
+    <RootNamespace>ProfitBricks</RootNamespace>
+    <AssemblyName>ProfitBricks</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,7 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Profitbricks.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\ProfitBricks.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,7 +35,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Profitbricks.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\ProfitBricks.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -75,7 +77,7 @@
     <Compile Include="LoadBalancer.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="Nic.cs" />
-    <Compile Include="Profitbricks.cs" />
+    <Compile Include="ProfitBricks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="Server.cs" />
@@ -84,6 +86,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="ProfitBricks.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="test_scripts\lan_test.ps1" />
     <None Include="test_scripts\ipblock_test.ps1" />
     <None Include="test_scripts\image_test.ps1" />
@@ -100,8 +105,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\XmlDoc2CmdletDoc.0.2.3\build\XmlDoc2CmdletDoc.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\XmlDoc2CmdletDoc.0.2.3\build\XmlDoc2CmdletDoc.props'))" />
     <Error Condition="!Exists('..\packages\XmlDoc2CmdletDoc.0.2.3\build\XmlDoc2CmdletDoc.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\XmlDoc2CmdletDoc.0.2.3\build\XmlDoc2CmdletDoc.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <Import Project="..\packages\XmlDoc2CmdletDoc.0.2.3\build\XmlDoc2CmdletDoc.targets" Condition="Exists('..\packages\XmlDoc2CmdletDoc.0.2.3\build\XmlDoc2CmdletDoc.targets')" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

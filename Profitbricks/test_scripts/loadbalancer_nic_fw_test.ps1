@@ -100,7 +100,7 @@ $balancedNic = Set-PBNicToLoadbalancer -DataCenterId $datacenter.Id -Loadbalance
 $balancedNics = Get-PBBalancedNics -DataCenterId $datacenter.Id -LoadbalancerId $loadbalancer.Id 
 
 if($balancedNics -ne $null -and $balancedNics.Id -eq $balancedNic.Id){
-"successfully attached a nic"
+"successfully ed a nic"
 }
 else {
 "nic attach failed"
@@ -114,7 +114,7 @@ Do{
 
 $status = Get-PBRequestStatus -RequestUrl $reqUrl
 
-}While($status.Metadata.Status -ne "DONE")
+}While($status.Metattachadata.Status -ne "DONE")
 
 "nic detached"
 
