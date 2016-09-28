@@ -221,7 +221,7 @@ Id                                   Type   Href
 The volume we created is not yet connected or attached to a server. To accomplish that, use the `dcid` and `serverid` values returned from the previous commands:
 
 ```
-$attachedvolume = Attach-PBVolume -DataCenterId $datacenter.Id -ServerId $newServer.Id -VolumeId $volume.Id
+$attachedvolume = Connect-PBVolume -DataCenterId $datacenter.Id -ServerId $newServer.Id -VolumeId $volume.Id
 $attachedvolume | Format-Table
 
 Id                                   Type   Href
@@ -290,55 +290,55 @@ Get-Command -Module Profitbricks
 
 CommandType     Name                                               Version    Source
 -----------     ----                                               -------    ------
-Cmdlet          Attach-PBVolume                                    1.0.0.0    Profitbricks
-Cmdlet          Detach-PBVolume                                    1.0.0.0    Profitbricks
-Cmdlet          Get-PBAttachedVolume                               1.0.0.0    Profitbricks
-Cmdlet          Get-PBBalancedNics                                 1.0.0.0    Profitbricks
-Cmdlet          Get-PBDatacenter                                   1.0.0.0    Profitbricks
-Cmdlet          Get-PBFirewallRule                                 1.0.0.0    Profitbricks
-Cmdlet          Get-PBImage                                        1.0.0.0    Profitbricks
-Cmdlet          Get-PBIPBlock                                      1.0.0.0    Profitbricks
-Cmdlet          Get-PBLan                                          1.0.0.0    Profitbricks
-Cmdlet          Get-PBLoadbalancer                                 1.0.0.0    Profitbricks
-Cmdlet          Get-PBLocation                                     1.0.0.0    Profitbricks
-Cmdlet          Get-PBNic                                          1.0.0.0    Profitbricks
-Cmdlet          Get-PBRequestStatus                                1.0.0.0    Profitbricks
-Cmdlet          Get-PBServer                                       1.0.0.0    Profitbricks
-Cmdlet          Get-PBSnapshot                                     1.0.0.0    Profitbricks
-Cmdlet          Get-PBVolume                                       1.0.0.0    Profitbricks
-Cmdlet          New-PBDatacenter                                   1.0.0.0    Profitbricks
-Cmdlet          New-PBFirewallRule                                 1.0.0.0    Profitbricks
-Cmdlet          New-PBIPBlock                                      1.0.0.0    Profitbricks
-Cmdlet          New-PBLan                                          1.0.0.0    Profitbricks
-Cmdlet          New-PBLoadbalancer                                 1.0.0.0    Profitbricks
-Cmdlet          New-PBNic                                          1.0.0.0    Profitbricks
-Cmdlet          New-PBServer                                       1.0.0.0    Profitbricks
-Cmdlet          New-PBSnapshot                                     1.0.0.0    Profitbricks
-Cmdlet          New-PBVolume                                       1.0.0.0    Profitbricks
-Cmdlet          Reboot-PBServer                                    1.0.0.0    Profitbricks
-Cmdlet          Remove-PBDatacenter                                1.0.0.0    Profitbricks
-Cmdlet          Remove-PBFirewallRule                              1.0.0.0    Profitbricks
-Cmdlet          Remove-PBIPBlock                                   1.0.0.0    Profitbricks
-Cmdlet          Remove-PBLan                                       1.0.0.0    Profitbricks
-Cmdlet          Remove-PBLoadbalancer                              1.0.0.0    Profitbricks
-Cmdlet          Remove-PBNic                                       1.0.0.0    Profitbricks
-Cmdlet          Remove-PBNicFromLoadbalancer                       1.0.0.0    Profitbricks
-Cmdlet          Remove-PBServer                                    1.0.0.0    Profitbricks
-Cmdlet          Remove-PBSnapshot                                  1.0.0.0    Profitbricks
-Cmdlet          Remove-PBVolume                                    1.0.0.0    Profitbricks
-Cmdlet          Restore-PBSnapshot                                 1.0.0.0    Profitbricks
-Cmdlet          Set-PBDatacenter                                   1.0.0.0    Profitbricks
-Cmdlet          Set-PBFirewallRule                                 1.0.0.0    Profitbricks
-Cmdlet          Set-PBLan                                          1.0.0.0    Profitbricks
-Cmdlet          Set-PBLoadbalancer                                 1.0.0.0    Profitbricks
-Cmdlet          Set-PBNic                                          1.0.0.0    Profitbricks
-Cmdlet          Set-PBNicToLoadbalancer                            1.0.0.0    Profitbricks
-Cmdlet          Set-PBServer                                       1.0.0.0    Profitbricks
-Cmdlet          Set-PBSnapshot                                     1.0.0.0    Profitbricks
-Cmdlet          Set-PBVolume                                       1.0.0.0    Profitbricks
-Cmdlet          Set-Profitbricks                                   1.0.0.0    Profitbricks
-Cmdlet          Start-PBServer                                     1.0.0.0    Profitbricks
-Cmdlet          Stop-PBServer                                      1.0.0.0    Profitbricks
+Cmdlet          Connect-PBVolume                                   1.0.0.0    ProfitBricks                                                  
+Cmdlet          Disconnect-PBVolume                                1.0.0.0    ProfitBricks                                                  
+Cmdlet          Get-PBAttachedVolume                               1.0.0.0    ProfitBricks                                                  
+Cmdlet          Get-PBBalancedNics                                 1.0.0.0    ProfitBricks                                                  
+Cmdlet          Get-PBDatacenter                                   1.0.0.0    ProfitBricks                                                  
+Cmdlet          Get-PBFirewallRule                                 1.0.0.0    ProfitBricks                                                  
+Cmdlet          Get-PBImage                                        1.0.0.0    ProfitBricks                                                  
+Cmdlet          Get-PBIPBlock                                      1.0.0.0    ProfitBricks                                                  
+Cmdlet          Get-PBLan                                          1.0.0.0    ProfitBricks                                                  
+Cmdlet          Get-PBLoadbalancer                                 1.0.0.0    ProfitBricks                                                  
+Cmdlet          Get-PBLocation                                     1.0.0.0    ProfitBricks                                                  
+Cmdlet          Get-PBNic                                          1.0.0.0    ProfitBricks                                                  
+Cmdlet          Get-PBRequestStatus                                1.0.0.0    ProfitBricks                                                  
+Cmdlet          Get-PBServer                                       1.0.0.0    ProfitBricks                                                  
+Cmdlet          Get-PBSnapshot                                     1.0.0.0    ProfitBricks                                                  
+Cmdlet          Get-PBVolume                                       1.0.0.0    ProfitBricks                                                  
+Cmdlet          New-PBDatacenter                                   1.0.0.0    ProfitBricks                                                  
+Cmdlet          New-PBFirewallRule                                 1.0.0.0    ProfitBricks                                                  
+Cmdlet          New-PBIPBlock                                      1.0.0.0    ProfitBricks                                                  
+Cmdlet          New-PBLan                                          1.0.0.0    ProfitBricks                                                  
+Cmdlet          New-PBLoadbalancer                                 1.0.0.0    ProfitBricks                                                  
+Cmdlet          New-PBNic                                          1.0.0.0    ProfitBricks                                                  
+Cmdlet          New-PBServer                                       1.0.0.0    ProfitBricks                                                  
+Cmdlet          New-PBSnapshot                                     1.0.0.0    ProfitBricks                                                  
+Cmdlet          New-PBVolume                                       1.0.0.0    ProfitBricks                                                  
+Cmdlet          Remove-PBDatacenter                                1.0.0.0    ProfitBricks                                                  
+Cmdlet          Remove-PBFirewallRule                              1.0.0.0    ProfitBricks                                                  
+Cmdlet          Remove-PBIPBlock                                   1.0.0.0    ProfitBricks                                                  
+Cmdlet          Remove-PBLan                                       1.0.0.0    ProfitBricks                                                  
+Cmdlet          Remove-PBLoadbalancer                              1.0.0.0    ProfitBricks                                                  
+Cmdlet          Remove-PBNic                                       1.0.0.0    ProfitBricks                                                  
+Cmdlet          Remove-PBNicFromLoadbalancer                       1.0.0.0    ProfitBricks                                                  
+Cmdlet          Remove-PBServer                                    1.0.0.0    ProfitBricks                                                  
+Cmdlet          Remove-PBSnapshot                                  1.0.0.0    ProfitBricks                                                  
+Cmdlet          Remove-PBVolume                                    1.0.0.0    ProfitBricks                                                  
+Cmdlet          Reset-PBServer                                     1.0.0.0    ProfitBricks                                                  
+Cmdlet          Restore-PBSnapshot                                 1.0.0.0    ProfitBricks                                                  
+Cmdlet          Set-PBDatacenter                                   1.0.0.0    ProfitBricks                                                  
+Cmdlet          Set-PBFirewallRule                                 1.0.0.0    ProfitBricks                                                  
+Cmdlet          Set-PBLan                                          1.0.0.0    ProfitBricks                                                  
+Cmdlet          Set-PBLoadbalancer                                 1.0.0.0    ProfitBricks                                                  
+Cmdlet          Set-PBNic                                          1.0.0.0    ProfitBricks                                                  
+Cmdlet          Set-PBNicToLoadbalancer                            1.0.0.0    ProfitBricks                                                  
+Cmdlet          Set-PBServer                                       1.0.0.0    ProfitBricks                                                  
+Cmdlet          Set-PBSnapshot                                     1.0.0.0    ProfitBricks                                                  
+Cmdlet          Set-PBVolume                                       1.0.0.0    ProfitBricks                                                  
+Cmdlet          Set-ProfitBricks                                   1.0.0.0    ProfitBricks                                                  
+Cmdlet          Start-PBServer                                     1.0.0.0    ProfitBricks                                                  
+Cmdlet          Stop-PBServer                                      1.0.0.0    ProfitBricks   
 ```
 
 ### Get Help for a Commandlet
