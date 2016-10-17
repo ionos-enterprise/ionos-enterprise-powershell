@@ -124,6 +124,12 @@ namespace ProfitBricks
         [Parameter(Position = 6, HelpMessage = "Once you add a firewall rule this will reflect a true value.", ValueFromPipeline = true)]
         public bool? FirewallActive { get; set; }
 
+        /// <summary>
+        /// <para type="description">Network Address Translation</para>
+        /// </summary>
+        [Parameter(Position = 7, HelpMessage = "Setting the nat parameter to true allows a NIC that is part of an internal or private LAN to access the public internet.", ValueFromPipeline = true)]
+        public bool? Nat { get; set; }
+
         #endregion
 
         protected override void BeginProcessing()
@@ -146,6 +152,11 @@ namespace ProfitBricks
                 {
                     newProps.Name = Name;
                 }
+                if (Nat != null)
+                {
+                    newProps.Nat = Nat;
+                }
+
                 var nic = nicApi.Create(DataCenterId, ServerId, new Nic { Properties = newProps }, depth: 5);
 
                 WriteObject(nic);
@@ -261,6 +272,12 @@ namespace ProfitBricks
         [Parameter(Position = 6, HelpMessage = "The LAN ID the NIC sits on.", ValueFromPipeline = true)]
         public int LanId { get; set; }
 
+        /// <summary>
+        /// <para type="description">Network Address Translation</para>
+        /// </summary>
+        [Parameter(Position = 7, HelpMessage = "Setting the nat parameter to true allows a NIC that is part of an internal or private LAN to access the public internet.", ValueFromPipeline = true)]
+        public bool? Nat { get; set; }
+
         #endregion
 
         protected override void BeginProcessing()
@@ -282,6 +299,10 @@ namespace ProfitBricks
                 if (!string.IsNullOrEmpty(Name))
                 {
                     newProps.Name = Name;
+                }
+                if (Nat != null)
+                {
+                    newProps.Nat = Nat;
                 }
                 var nic = nicApi.PartialUpdate(DataCenterId, ServerId, NicId, newProps, depth: 5);
 

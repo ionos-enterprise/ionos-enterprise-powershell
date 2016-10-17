@@ -172,6 +172,12 @@ namespace ProfitBricks
         [Parameter(Position = 7, HelpMessage = "The name of the volume.", ValueFromPipeline = true)]
         public string Name { get; set; }
 
+        /// <summary>
+        /// <para type="description">The availability zone in which the volume should exist. AUTO, ZONE_1, ZONE_2.</para>
+        /// </summary>
+        [Parameter(Position = 8, HelpMessage = "The availability zone in which the volume should exist. AUTO, ZONE_1, ZONE_2", ValueFromPipeline = true)]
+        public string AvailabilityZone { get; set; }
+
         #endregion
 
         protected override void BeginProcessing()
@@ -218,6 +224,10 @@ namespace ProfitBricks
                 if (!string.IsNullOrEmpty(SshKey))
                 {
                     volume.Properties.SshKeys = new List<string> { SshKey };
+                }
+                if (!string.IsNullOrEmpty(AvailabilityZone))
+                {
+                    volume.Properties.AvailabilityZone = AvailabilityZone;
                 }
 
                 var newVolume = volumeApi.Create(this.DataCenterId, volume);
@@ -505,6 +515,13 @@ namespace ProfitBricks
         [Parameter(Position = 19, ValueFromPipeline = true)]
         public bool? DiscScsiHotUnplug { get; set; }
 
+        /// <summary>
+        /// <para type="description">The availability zone in which the volume should exist. AUTO, ZONE_1, ZONE_2.</para>
+        /// </summary>
+        [Parameter(Position = 20, HelpMessage = "The availability zone in which the volume should exist. AUTO, ZONE_1, ZONE_2", ValueFromPipeline = true)]
+        public string AvailabilityZone { get; set; }
+
+
         #endregion
 
         protected override void BeginProcessing()
@@ -544,6 +561,10 @@ namespace ProfitBricks
                 if (this.Size != 0)
                 {
                     newProps.Size = this.Size;
+                }
+                if (!string.IsNullOrEmpty(AvailabilityZone))
+                {
+                    newProps.AvailabilityZone = AvailabilityZone;
                 }
 
                 newProps.CpuHotPlug = CpuHotPlug;
