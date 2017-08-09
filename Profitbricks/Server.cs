@@ -97,7 +97,7 @@ namespace ProfitBricks
         /// <para type="description">The amount of memory for the server in MB, e.g. 2048. Size must be specified in multiples of 256 MB with a minimum of 256 MB. However, if you set ramHotPlug to TRUE then you must use a minimum of 1024 MB. Mandatory parameter.</para>
         /// </summary>
         [Parameter(Position = 3, HelpMessage = "The amount of memory for the server in MB, e.g. 2048.Size must be specified in multiples of 256 MB with a minimum of 256 MB; however, if you set ramHotPlug to TRUE then you must use a minimum of 1024 MB.", Mandatory = true, ValueFromPipeline = true)]
-        public int Ram { get; set; }
+        public long Ram { get; set; }
 
         /// <summary>
         /// <para type="description">Image or snapshot ID</para>
@@ -172,15 +172,13 @@ namespace ProfitBricks
 
                 var datacenter = dcApi.FindById(DataCenterId, depth: 5);
 
-                int ram = (int)this.Ram;
-
                 var server = new Server
                 {
                     Properties = new ServerProperties
                     {
                         Name = this.Name,
                         Cores = this.Cores,
-                        Ram = ram / 1024 / 1024
+                        Ram = (int)(this.Ram / 1024 / 1024)
                     }
                 };
 
