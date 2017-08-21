@@ -117,46 +117,52 @@ namespace ProfitBricks
         [Parameter(Position = 6, HelpMessage = "Sets static Ip address for the server.", Mandatory = true, ValueFromPipeline = true)]
         public bool StaticIp { get; set; }
 
+        /// <summary>
+        /// <para type="description">The CPU family (AMD_OPTERON or INTEL_XEON). Default: AMD_OPTERON.</para>
+        /// </summary>
+        [Parameter(Position = 7, HelpMessage = "The CPU family (AMD_OPTERON or INTEL_XEON). Default: AMD_OPTERON.", ValueFromPipeline = true)]
+        public string CpuFamily { get; set; }
 
         /// <summary>
         /// <para type="description">SSH key to allow access to the volume via SSH</para>
         /// </summary>
-        [Parameter(Position = 7, HelpMessage = "SSH key to allow access to the volume via SSH.", ValueFromPipeline = true)]
+        [Parameter(Position = 8, HelpMessage = "SSH key to allow access to the volume via SSH.", ValueFromPipeline = true)]
         public string SshKey { get; set; }
+
         /// <summary>
         /// <para type="description">The availability zone in which the server should exist. AUTO, ZONE_1, ZONE_2.</para>
         /// </summary>
-        [Parameter(Position = 8, HelpMessage = "The availability zone in which the server should exist. AUTO, ZONE_1, ZONE_2", ValueFromPipeline = true)]
+        [Parameter(Position = 9, HelpMessage = "The availability zone in which the server should exist. AUTO, ZONE_1, ZONE_2", ValueFromPipeline = true)]
         public string AvailabilityZone { get; set; }
 
         /// <summary>
         /// <para type="description">Reference to a volume used for booting. If not ‘null’ then bootCdrom has to be ‘null’.</para>
         /// </summary>
-        [Parameter(Position = 9, HelpMessage = "Reference to a Volume used for booting. If not ‘null’ then bootCdrom has to be ‘null’.", ValueFromPipeline = true)]
+        [Parameter(Position = 10, HelpMessage = "Reference to a Volume used for booting. If not ‘null’ then bootCdrom has to be ‘null’.", ValueFromPipeline = true)]
         public string BootVolume { get; set; }
 
         /// <summary>
         /// <para type="description">Reference to a CD-ROM used for booting. If not 'null' then bootVolume has to be 'null'.</para>
         /// </summary>
-        [Parameter(Position = 10, HelpMessage = "Reference to a CD-ROM used for booting. If not 'null' then bootVolume has to be 'null'.", ValueFromPipeline = true)]
+        [Parameter(Position = 11, HelpMessage = "Reference to a CD-ROM used for booting. If not 'null' then bootVolume has to be 'null'.", ValueFromPipeline = true)]
         public string BootCDRom { get; set; }
 
         /// <summary>
         /// <para type="description">Volume size. Default value 20gb.</para>
         /// </summary>
-        [Parameter(Position = 11, HelpMessage = "Volume size. Default value 20gb.", ValueFromPipeline = true)]
+        [Parameter(Position = 12, HelpMessage = "Volume size. Default value 20gb.", ValueFromPipeline = true)]
         public long Size { get; set; }
 
         /// <summary>
         /// <para type="description">Disk type. Default value HDD.</para>
         /// </summary>
-        [Parameter(Position = 12, HelpMessage = "Disk type. Default value HDD.", ValueFromPipeline = true)]
+        [Parameter(Position = 13, HelpMessage = "Disk type. Default value HDD.", ValueFromPipeline = true)]
         public string DiskType { get; set; }
 
         /// <summary>
         /// <para type="description">One-time password for the image. Only these characters are allowed: [abcdefghjkmnpqrstuvxABCDEFGHJKLMNPQRSTUVX23456789]</para>
         /// </summary>
-        [Parameter(Position = 13, HelpMessage = "One-time password for the Image. Only these characters are allowed: [abcdefghjkmnpqrstuvxABCDEFGHJKLMNPQRSTUVX23456789]", ValueFromPipeline = true)]
+        [Parameter(Position = 14, HelpMessage = "One-time password for the Image. Only these characters are allowed: [abcdefghjkmnpqrstuvxABCDEFGHJKLMNPQRSTUVX23456789]", ValueFromPipeline = true)]
         public string Password { get; set; }
 
         #endregion
@@ -178,7 +184,8 @@ namespace ProfitBricks
                     {
                         Name = this.Name,
                         Cores = this.Cores,
-                        Ram = (int)(this.Ram / 1024 / 1024)
+                        Ram = (int)(this.Ram / 1024 / 1024),
+                        CpuFamily = this.CpuFamily
                     }
                 };
 
@@ -379,9 +386,15 @@ namespace ProfitBricks
         public int Ram { get; set; }
 
         /// <summary>
+        /// <para type="description">The CPU family (AMD_OPTERON or INTEL_XEON).</para>
+        /// </summary>
+        [Parameter(Position = 5, HelpMessage = "The CPU family (AMD_OPTERON or INTEL_XEON).", ValueFromPipeline = true)]
+        public string CpuFamily { get; set; }
+
+        /// <summary>
         /// <para type="description">The availability zone in which the server should exist.</para>
         /// </summary>
-        [Parameter(Position = 5, HelpMessage = "The availability zone in which the server should exist.", ValueFromPipeline = true)]
+        [Parameter(Position = 6, HelpMessage = "The availability zone in which the server should exist.", ValueFromPipeline = true)]
         public string AvailabilityZone { get; set; }
 
         #endregion
@@ -403,6 +416,10 @@ namespace ProfitBricks
             if (Ram != 0)
             {
                 server.Ram = this.Ram;
+            }
+            if (!string.IsNullOrEmpty(this.CpuFamily) && !string.IsNullOrWhiteSpace(this.CpuFamily))
+            {
+                server.CpuFamily = this.CpuFamily;
             }
             if (!string.IsNullOrEmpty(this.AvailabilityZone) && !string.IsNullOrWhiteSpace(this.AvailabilityZone))
             {

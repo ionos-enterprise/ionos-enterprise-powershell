@@ -38,9 +38,9 @@ namespace ProfitBricks
 
                 if (!string.IsNullOrEmpty(this.LocationId))
                 {
-                    if (LocationId.Contains("/"))
+                    if (!string.IsNullOrEmpty(LocationId))
                     {
-                        var location = locationApi.FindById(LocationId.Split('/')[0], LocationId.Split('/')[1], depth: 5);
+                        var location = locationApi.FindById(LocationId, depth: 5);
                         WriteObject(location);
                     }else
                     {
