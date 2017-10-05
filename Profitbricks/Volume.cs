@@ -20,7 +20,7 @@ namespace ProfitBricks
     public class GetAttachedVolume : Cmdlet
     {
         #region Parameters 
-        
+
         /// <summary>
         /// <para type="description">Virtual data center ID. Mandatory parameter.</para>
         /// </summary>
@@ -116,7 +116,7 @@ namespace ProfitBricks
     public class NewVolume : Cmdlet
     {
         #region Parameters 
-        
+
         /// <summary>
         /// <para type="description">Virtual data center ID. Mandatory parameter</para>
         /// </summary>
@@ -150,7 +150,7 @@ namespace ProfitBricks
         /// <summary>
         /// <para type="description">The licence type of the volume.</para>
         /// </summary>
-        [Parameter(Position = 5, HelpMessage = "The licence type of the volume. Options: LINUX, WINDOWS, UNKNOWN, OTHER", ValueFromPipeline = true)]
+        [Parameter(Position = 5, HelpMessage = "The licence type of the volume. Options: LINUX, WINDOWS, WINDOWS2016, UNKNOWN, OTHER", ValueFromPipeline = true)]
         public string LicenceType { get; set; }
 
         /// <summary>
@@ -158,6 +158,7 @@ namespace ProfitBricks
         /// </summary>
         [Parameter(Position = 6, HelpMessage = "One-time password for the Image. Only these characters are allowed: [abcdefghjkmnpqrstuvxABCDEFGHJKLMNPQRSTUVX23456789]", ValueFromPipeline = true)]
         public string ImagePassword { get; set; }
+
 
         /// <summary>
         /// <para type="description">SSH key to allow access to the volume via SSH</para>
@@ -178,6 +179,12 @@ namespace ProfitBricks
         [Parameter(Position = 8, HelpMessage = "The availability zone in which the volume should exist. AUTO, ZONE_1, ZONE_2", ValueFromPipeline = true)]
         public string AvailabilityZone { get; set; }
 
+        /// <summary>
+        /// <para type="description">The alias of the image.</para>
+        /// </summary>
+        [Parameter(Position = 9, HelpMessage = "The alias of the image.", ValueFromPipeline = true)]
+        public string ImageAlias { get; set; }
+
         #endregion
 
         protected override void BeginProcessing()
@@ -186,9 +193,10 @@ namespace ProfitBricks
             {
                 var volumeApi = new VolumeApi(Utilities.Configuration);
 
-                if (string.IsNullOrEmpty(this.ImageId) && string.IsNullOrEmpty(this.LicenceType))
+                if (string.IsNullOrEmpty(this.ImageId) && string.IsNullOrEmpty(this.ImageAlias)
+                    && string.IsNullOrEmpty(this.LicenceType))
                 {
-                    WriteWarning("Please provide ImageId or LicenceType.");
+                    WriteWarning("Please provide ImageAlias, ImageId or LicenceType.");
                     return;
                 }
 
@@ -228,6 +236,10 @@ namespace ProfitBricks
                 if (!string.IsNullOrEmpty(AvailabilityZone))
                 {
                     volume.Properties.AvailabilityZone = AvailabilityZone;
+                }
+                if (!string.IsNullOrEmpty(ImageAlias))
+                {
+                    volume.Properties.ImageAlias = ImageAlias;
                 }
 
                 var newVolume = volumeApi.Create(this.DataCenterId, volume);
@@ -432,9 +444,9 @@ namespace ProfitBricks
         public string ImageId { get; set; }
 
         /// <summary>
-        /// <para type="description">The license type of the volume. Options: LINUX, WINDOWS, UNKNOWN, OTHER</para>
+        /// <para type="description">The license type of the volume. Options: LINUX, WINDOWS, WINDOWS2016, UNKNOWN, OTHER</para>
         /// </summary>
-        [Parameter(Position = 6, HelpMessage = "The licence type of the volume. Options: LINUX, WINDOWS, UNKNOWN, OTHER", ValueFromPipeline = true)]
+        [Parameter(Position = 6, HelpMessage = "The licence type of the volume. Options: LINUX, WINDOWS, WINDOWS2016, UNKNOWN, OTHER", ValueFromPipeline = true)]
         public string LicenceType { get; set; }
 
         /// <summary>

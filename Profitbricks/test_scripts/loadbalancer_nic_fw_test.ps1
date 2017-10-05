@@ -42,15 +42,8 @@ else{
 }
 
 
-$newServer = New-PBServer -DataCenterId $datacenter.Id -Name "server_test" -Cores 1 -Ram 1024 
-
-Do{
-"Waiting on server to provision"
-
-$serverstatus = Get-PBRequestStatus -RequestUrl $newServer.Request
-
- start-sleep -seconds 5
-}While($serverstatus.Metadata.Status -ne "DONE")
+$newServer = New-PBServer -DataCenterId $datacenter.Id -Name "server_test" -ImageAlias "ubuntu:latest" -Password "Vol44lias" -Cores 1 -Ram 1073741824 -PublicIp 0 -StaticIp 1
+start-sleep -seconds 30
 
 $server = Get-PBServer -DataCenterId $newDc.Id -ServerId $newServer.Id
 
@@ -107,14 +100,8 @@ else {
 }
 
 $reqUrl = Remove-PBNicFromLoadbalancer -DataCenterId $datacenter.Id -LoadbalancerId $loadbalancer.Id -NicId $balancedNic.Id
+start-sleep -seconds 30
 
-Do{
-"Waiting on nic to detach"
- start-sleep -seconds 5
-
-$status = Get-PBRequestStatus -RequestUrl $reqUrl
-
-}While($status.Metattachadata.Status -ne "DONE")
 
 "nic detached"
 
@@ -125,4 +112,4 @@ Remove-PBNic -DataCenterId $datacenter.Id -ServerId $server.Id -NicId $nic.Id
 
 Remove-PBDatacenter -DatacenterId $datacenter.Id
 
-#Remove-Module Profitbricks
+Remove-Module Profitbricks

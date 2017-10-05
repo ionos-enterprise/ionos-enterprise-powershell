@@ -18,15 +18,8 @@ $dcstatus.Metadata.MEssage
 
 $datacenter = Get-PBDatacenter $newDc.Id
 
-$newServer = New-PBServer -DataCenterId $datacenter.Id -Name "server_test" -Cores 1 -Ram 1024 
-
-Do{
-"Waiting on server to provision"
-
-$serverstatus = Get-PBRequestStatus -RequestUrl $newServer.Request
-
- start-sleep -seconds 5
-}While($serverstatus.Metadata.Status -ne "DONE")
+$newServer = New-PBServer -DataCenterId $datacenter.Id -Name "server_test" -ImageAlias "ubuntu:latest" -Password "Vol44lias" -Cores 1 -Ram 1073741824 -PublicIp 0 -StaticIp 1
+start-sleep -seconds 30
 
 $server = Get-PBServer -DataCenterId $newDc.Id -ServerId $newServer.Id
 
@@ -43,7 +36,7 @@ if($updatedServer.Properties.Name -eq $new_name)
     "The name is " + $updatedServer.Properties.Name
 }
 
-Reboot-PBServer -DataCenterId $datacenter.Id -ServerId $server.Id
+Reset-PBServer -DataCenterId $datacenter.Id -ServerId $server.Id
  start-sleep -seconds 40
 
 $server = Get-PBServer -DataCenterId $newDc.Id -ServerId $newServer.Id

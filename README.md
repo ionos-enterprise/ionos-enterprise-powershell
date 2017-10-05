@@ -16,6 +16,29 @@
     * [List Snapshots](#list-snapshots)
     * [Update Snapshot](#update-snapshot)
     * [Delete Snapshot](#delete-snapshot)
+    * [User Management](#user-management)
+      * [List Groups](#list-groups)
+      * [Get a Group](#get-a-group)
+      * [Create a Group](#create-a-group)
+      * [Update a Group](#update-a-group)
+      * [Delete a Group](#delete-a-group)
+      * [List Shares](#list-shares)
+      * [Get a Share](#get-a-share)
+      * [Add a Share](#add-a-share)
+      * [Update a Share](#update-a-share)
+      * [Delete a Share](#delete-a-share)
+      * [List Users](#list-users)
+      * [Get a User](#get-a-user)
+      * [Create a User](#create-a-user)
+      * [Update a User](#update-a-user)
+      * [Delete a User](#delete-a-user)
+      * [List Users in a Group](#list-users-in-a-group)
+      * [Add User to Group](#add-user-to-group)
+      * [Remove User from a Group](#remove-user-from-a-group)
+      * [List Resources](#list-resources)
+      * [Get a Resource](#get-a-resource)
+    * [Contract Resources](#contract-resources)
+      * [List Contract Resources](#list-contract-resources)    
     * [List All Commandlets](#list-all-commandlets)
     * [Get Help for a Commandlet](#get-help-for-a-commandlet)
 
@@ -281,11 +304,199 @@ We can delete our snapshot when we are done with it:
 Remove-PBSnapshot -SnapshotId $snapshots.Item(0).Id
 ```
 
+### User Management
+
+#### List Groups
+
+Retrieves a list of all groups.
+
+```
+$groups = Get-PBGroup
+$groups | Format-Table
+
+```
+
+#### Get a Group
+
+```
+$group = Get-PBGroup -GroupId [GroupId]
+$groups | Format-Table
+
+```
+
+#### Create a Group
+
+Creates a new group and set group privileges. We have to pass the 'Name' for the group, along with some other relevant properties (CreateDataCenter, CreateSnapshot, ReserveIp, AccessActivityLog) for the new group.
+
+```
+$newGroup = New-PBGroup -Name GroupName -CreateDataCenter 1 -CreateSnapshot 1
+$groups | Format-Table
+
+```
+
+#### Update a Group
+
+Updates a group's name or privileges. Only parameters passed in the commandlet will be updated.
+
+```
+$updatedGroup = Set-PBGroup -GroupId [GroupId] -Name GroupNameUpdated -CreateDataCenter 0 -CreateSnapshot 1
+$groups | Format-Table
+
+```
+
+#### Delete a Group
+
+Deletes the specified group.
+
+```
+Remove-PBGroup -GroupId [UUID]
+
+```
+
+#### List Shares
+
+Retrieves a list of all shares though a group and lists the permissions granted to the group members for each shared resource.
+
+```
+$shares = Get-PBShare
+$shares | Format-Table
+
+```
+
+#### Get a Share
+
+Retrieves a specific resource share available to a group.
+
+```
+$share = Get-PBShare -ResourceId [ResourceId]
+$share | Format-Table
+
+```
+
+#### Add a Share
+
+Shares a resource through a group.
+
+```
+$share = New-PBShare -GroupId [UUID] -ResourceId [UUID] -EditPrivilege 1 -SharePrivilege 1
+$share | Format-Table
+
+```
+
+#### Update a Share
+
+Updates the permissions of a group for a resource share.
+
+```
+$share = Set-PBShare -GroupId [UUID] -ShareId [UUID] -EditPrivilege 0 -SharePrivilege 0
+$share | Format-Table
+
+```
+
+#### Delete a Share
+
+```
+Remove-PBShare -GroupId [UUID] -ShareId [ShareId]
+
+```
+
+#### List Users
+
+Retrieves a list of all users.
+
+```
+$users = Get-PBUser
+$users | Format-Table
+
+```
+
+#### Get a User
+
+Retrieves a single user.
+
+```
+$user = Get-PBUser -UserId [UserId]
+$user | Format-Table
+
+```
+
+#### Create a User
+
+Creates a new user.
+
+```
+$user = New-PBUser -FirstName [firstName] -LastName [lastName] -Email [email] -Password [password]
+$user | Format-Table
+
+```
+
+#### Update a User
+
+Updates an existing user.
+
+```
+$updatedUser = Set-PBUser -FirstName [firstName] -LastName [lastName] -Email [email]
+$user | Format-Table
+
+```
+
+#### Delete a User
+
+Removes a user.
+
+```
+Remove-PBUser -User [UUID]
+
+```
+
+#### List Users in a Group
+
+Retrieves a list of all users that are members of a particular group.
+
+```
+ListUserGroup-PBUser -GroupId [UUID]
+
+```
+
+#### Add User to Group
+
+Adds an existing user to a group.
+
+```
+AddToGroup-PBUser -GroupId [UUID] -UserId [UUID]
+
+```
+
+#### Remove User from a Group
+
+Removes a user from a group.
+
+```
+RemoveFromGroup-PBUser -GroupId [UUID] -UserId [UUID]
+
+```
+
+### List Contract Resources
+
+Retrieves information about the resource limits for a particular contract and the current resource usage:
+
+```
+
+$contracts = Get-PBContractResources
+$contracts| Format-Table
+
+ContractNumber Owner                       Status   ResourceLimits
+-------------- -----                       ------   --------------
+      31764105 vendors@stackpointcloud.com BILLABLE class ResourceLimits {...
+
+```
+
 ### List Commandlets
 
 Now we have had a taste of working with the Profitbricks Powershell module. To get more details on every commandlet contained in Profitbricks Powershell module you can do this:
 
 ```
+
 Get-Command -Module Profitbricks
 
 CommandType     Name                                               Version    Source
