@@ -18,8 +18,14 @@ $dcstatus.Metadata.MEssage
 
 $datacenter = Get-PBDatacenter $newDc.Id
 
-$newvolume = New-PBVolume -DataCenterId $datacenter.Id -Size 5 -Type HDD -ImageId 646023fb-f7bd-11e5-b7e8-52540005ab80 -Name "test_volume"
+$images = Get-PBImage
+$images = $images | Where-Object {$_.Properties.ImageType -eq 'HDD' -and $_.Properties.LicenceType -eq 'LINUX' -and $_.Properties.Location -eq 'us/las' -and $_.Properties.Public -eq 1}
+$image = $images[0]
+start-sleep -seconds 10
 
+
+$newvolume = New-PBVolume -DataCenterId $datacenter.Id -Size 20 -Type HDD -ImageId $image.Id -Name "test_volume" -ImagePassword "Vol44lias" -AvailabilityZone "AUTO"
+Start-Sleep -Seconds 20
 Do{
 "Waiting on volume to provision"
 
@@ -42,7 +48,7 @@ start-sleep -seconds 10
 
 $snapshot = Get-PBSnapshot -SnapshotId $snapshots.Item(0).Id
 
-if($snapshot.Properties.Name -eq $newname){
+if($updatedsnapshot.Properties.Name -eq $newname){
 "Update - Check"
 }
 else
@@ -50,10 +56,14 @@ else
 "Update failed"
 }
 
-Restore-PBSnapshot -DatacenterId $datacenter.Id -SnapshotId $snapshots.Item(0).Id
+Restore-PBSnapshot -DatacenterId $datacenter.Id -SnapshotId $snapshots.Item(0).Id -VolumeId $newvolume.Id
+
+start-sleep -seconds 20
 
 Remove-PBSnapshot -SnapshotId $snapshots.Item(0).Id
 
+start-sleep -seconds 20
+
 Remove-PBDatacenter -DatacenterId $datacenter.Id
 
-#Remove-Module Profitbricks
+Remove-Module Profitbricks

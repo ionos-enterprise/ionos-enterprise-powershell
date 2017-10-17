@@ -75,9 +75,9 @@ namespace ProfitBricks
         public string Name { get; set; }
 
         /// <summary>
-        /// <para type="description">Virtual data center location (us/las, de/fkb, de/fra). Mandatory parameter</para>
+        /// <para type="description">Virtual data center location (us/las, de/fkb, de/fra, us/ewr). Mandatory parameter</para>
         /// </summary>
-        [Parameter(Position = 1, HelpMessage = "Virtual data center Location (us/las, de/fkb, de/fra)", ValueFromPipeline = true,Mandatory = true)]
+        [Parameter(Position = 1, HelpMessage = "Virtual data center Location (us/las, de/fkb, de/fra, us/ewr)", ValueFromPipeline = true, Mandatory = true)]
         public string Location { get; set; }
 
         /// <summary>

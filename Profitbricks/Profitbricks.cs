@@ -34,14 +34,15 @@ namespace ProfitBricks
         {
             try
             {
-                var dcApi = new LocationApi(new Configuration { Username = Credential.UserName, Password = Utilities.SecureStringToString(Credential.Password) });
+                var dcApi = new LocationApi(new Configuration { Username = Credential.UserName, Password = Utilities.SecureStringToString(Credential.Password) , UsedBy = Version.Get });
 
                 var dcs = dcApi.FindAll(depth: 5);
 
                 Utilities.Configuration = new Configuration
                 {
                     Username = Credential.UserName,
-                    Password = Utilities.SecureStringToString(Credential.Password)
+                    Password = Utilities.SecureStringToString(Credential.Password),
+                    UsedBy = Version.Get
                 };
 
                 WriteObject("Authorization successful" );

@@ -142,7 +142,7 @@ namespace ProfitBricks
         /// </summary>
         [Parameter(Position = 1, HelpMessage = "LAN Id", Mandatory = true, ValueFromPipeline = true)]
         public string LanId { get; set; }
-        
+
         #endregion
         protected override void BeginProcessing()
         {
@@ -197,20 +197,44 @@ namespace ProfitBricks
         [Parameter(Position = 3, HelpMessage = "Boolean indicating if the LAN faces the public Internet or not.", ValueFromPipeline = true)]
         public bool? Public { get; set; }
 
+        /// <summary>
+        /// <para type="description">Ip for ip failover</para>
+        /// </summary>
+        [Parameter(Position = 4, HelpMessage = "Ip for ip failover", ValueFromPipeline = true)]
+        public string IpFailoverIp { get; set; }
+
+        /// <summary>
+        /// <para type="description">NicId for ip failover</para>
+        /// </summary>
+        [Parameter(Position = 4, HelpMessage = "Nic id for ip failover", ValueFromPipeline = true)]
+        public string NicIdIpFailover { get; set; }
+
         #endregion
         protected override void BeginProcessing()
         {
             try
             {
                 var lanApi = new LanApi(Utilities.Configuration);
-                var newProps = new LanProperties { Public = this.Public};
+                var newProps = new LanProperties { Public = this.Public };
+
+                if (!String.IsNullOrEmpty(this.IpFailoverIp) && !String.IsNullOrEmpty(this.NicIdIpFailover))
+                {
+                    List<IpFailover> ipFailovers = new List<IpFailover>();
+                    ipFailovers.Add(new IpFailover()
+                    {
+                        Ip = this.IpFailoverIp,
+                        NicUuid = this.NicIdIpFailover
+                    });
+
+                    newProps.IpFailover = ipFailovers;
+                }
 
                 if (!string.IsNullOrEmpty(Name))
                 {
                     newProps.Name = Name;
                 }
 
-                var resp = lanApi.PartialUpdate(DataCenterId, LanId,newProps);
+                var resp = lanApi.PartialUpdate(DataCenterId, LanId, newProps);
 
                 WriteObject("Lan successfully removed.");
             }

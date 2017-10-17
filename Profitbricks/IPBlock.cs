@@ -80,7 +80,7 @@ namespace ProfitBricks
         /// </summary>
         [Parameter(Position = 1, HelpMessage = "The size of the IP block", Mandatory = true, ValueFromPipeline = true)]
         public int Size { get; set; }
-        
+
         #endregion
 
         protected override void BeginProcessing()
@@ -118,7 +118,7 @@ namespace ProfitBricks
         /// </summary>
         [Parameter(Position = 0, HelpMessage = "IPBlock Id", Mandatory = true, ValueFromPipeline = true)]
         public string IpBlockId { get; set; }
-        
+
         #endregion
 
         protected override void BeginProcessing()

@@ -253,7 +253,7 @@ namespace ProfitBricks
         public bool? DiscScsiHotUnplug { get; set; }
 
         /// <summary>
-        /// <para type="description">The snapshot's license type: LINUX, WINDOWS, or UNKNOWN.	</para>
+        /// <para type="description">The snapshot's license type: LINUX, WINDOWS, WINDOWS2016 or UNKNOWN.	</para>
         /// </summary>
         [Parameter(Position = 13, ValueFromPipeline = true)]
         public string LicenceType { get; private set; }

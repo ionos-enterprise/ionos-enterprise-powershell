@@ -46,9 +46,8 @@
       <HintPath>..\packages\NUnit.3.7.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ProfitbricksSDK, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProfitbricksSDK.4.0.1\lib\net45\ProfitbricksSDK.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="ProfitbricksSDK">
+      <HintPath>..\packages\ProfitbricksSDK.4.1.1\lib\net45\ProfitbricksSDK.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
@@ -69,8 +68,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="Contract.cs" />
     <Compile Include="Datacenter.cs" />
     <Compile Include="FirewallRule.cs" />
+    <Compile Include="Group.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="IPBlock.cs" />
     <Compile Include="Lan.cs" />
@@ -80,22 +81,32 @@
     <Compile Include="ProfitBricks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
+    <Compile Include="Resource.cs" />
     <Compile Include="Server.cs" />
+    <Compile Include="Share.cs" />
     <Compile Include="Snapshot.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="Version.cs" />
     <Compile Include="Volume.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="ProfitBricks.psd1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="test_scripts\resource_test.ps1" />
+    <None Include="test_scripts\contract_test.ps1" />
+    <None Include="test_scripts\group_test.ps1" />
+    <None Include="test_scripts\volume_imagealias_test.ps1" />
+    <None Include="test_scripts\ip_failover_test.ps1" />
     <None Include="test_scripts\lan_test.ps1" />
     <None Include="test_scripts\ipblock_test.ps1" />
     <None Include="test_scripts\image_test.ps1" />
     <None Include="test_scripts\datacenter_test.ps1" />
+    <None Include="test_scripts\share_test.ps1" />
     <None Include="test_scripts\snapshot_test.ps1" />
     <None Include="test_scripts\loadbalancer_nic_fw_test.ps1" />
+    <None Include="test_scripts\user_test.ps1" />
     <None Include="test_scripts\volume_test.ps1" />
     <None Include="test_scripts\server_test.ps1" />
   </ItemGroup>

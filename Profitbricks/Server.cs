@@ -102,7 +102,7 @@ namespace ProfitBricks
         /// <summary>
         /// <para type="description">Image or snapshot ID</para>
         /// </summary>
-        [Parameter(Position = 4, HelpMessage = "Image or snapshot ID", Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Position = 4, HelpMessage = "Image or snapshot ID", ValueFromPipeline = true)]
         public string ImageId { get; set; }
 
         /// <summary>
@@ -165,6 +165,12 @@ namespace ProfitBricks
         [Parameter(Position = 14, HelpMessage = "One-time password for the Image. Only these characters are allowed: [abcdefghjkmnpqrstuvxABCDEFGHJKLMNPQRSTUVX23456789]", ValueFromPipeline = true)]
         public string Password { get; set; }
 
+        /// <summary>
+        /// <para type="description">The alias of the image.</para>
+        /// </summary>
+        [Parameter(Position = 15, HelpMessage = "The alias of the image.", ValueFromPipeline = true)]
+        public string ImageAlias { get; set; }
+
         #endregion
 
         protected override void BeginProcessing()
@@ -218,11 +224,20 @@ namespace ProfitBricks
                     Properties = new VolumeProperties
                     {
                         Size = (int)(size / 1024 / 1024 / 1024),
-                        Image = ImageId,
                         Type = (string.IsNullOrEmpty(DiskType) ? "HDD" : DiskType),
                         Name = Name,
                     }
                 };
+
+                if (!string.IsNullOrEmpty(ImageId))
+                {
+                    volume.Properties.Image = ImageId;
+                }
+
+                if (!string.IsNullOrEmpty(ImageAlias))
+                {
+                    volume.Properties.ImageAlias = ImageAlias;
+                }
 
                 if (!string.IsNullOrEmpty(SshKey))
                 {
@@ -284,9 +299,9 @@ namespace ProfitBricks
                 server = serverApi.FindById(datacenter.Id, newServer.Id, depth: 5);
 
                 datacenter = dcApi.FindById(DataCenterId, depth: 5);
-                
+
                 server = serverApi.FindById(datacenter.Id, newServer.Id, depth: 5);
-                
+
 
                 WriteObject(server);
 
