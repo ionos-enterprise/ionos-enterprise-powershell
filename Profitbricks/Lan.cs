@@ -93,9 +93,9 @@ namespace ProfitBricks
         [Parameter(Position = 2, HelpMessage = "Boolean indicating if the LAN faces the public Internet or not.", ValueFromPipeline = true)]
         public bool? Public { get; set; }
 
-		#endregion
+        #endregion
 
-		protected override void BeginProcessing()
+        protected override void BeginProcessing()
         {
             try
             {
@@ -103,12 +103,12 @@ namespace ProfitBricks
 
                 var newProps = new LanProperties { Public = this.Public };
 
-				if (!string.IsNullOrEmpty(Name))
+                if (!string.IsNullOrEmpty(Name))
                 {
                     newProps.Name = Name;
                 }
 
-				var newLan = lanApi.Create(DataCenterId, new Lan { Properties = newProps });
+                var newLan = lanApi.Create(DataCenterId, new Lan { Properties = newProps });
 
                 WriteObject(newLan);
             }
@@ -197,23 +197,23 @@ namespace ProfitBricks
         [Parameter(Position = 3, HelpMessage = "Boolean indicating if the LAN faces the public Internet or not.", ValueFromPipeline = true)]
         public bool? Public { get; set; }
 
-		/// <summary>
-		/// <para type="description">Collection for ip failover group.</para>
-		/// </summary>
-		[Parameter(Position = 4, HelpMessage = "Collection for ip failover group.", ValueFromPipeline = true)]
-		public List<IpFailover> IpFailover { get; set; }
+        /// <summary>
+        /// <para type="description">Collection for ip failover group.</para>
+        /// </summary>
+        [Parameter(Position = 4, HelpMessage = "Collection for ip failover group.", ValueFromPipeline = true)]
+        public List<IpFailover> IpFailover { get; set; }
 
-		#endregion
-		protected override void BeginProcessing()
+        #endregion
+        protected override void BeginProcessing()
         {
             try
             {
                 var lanApi = new LanApi(Utilities.Configuration);
                 var newProps = new LanProperties { Public = this.Public };
 
-				newProps.IpFailover = this.IpFailover;
+                newProps.IpFailover = this.IpFailover;
 
-				if (!string.IsNullOrEmpty(Name))
+                if (!string.IsNullOrEmpty(Name))
                 {
                     newProps.Name = Name;
                 }
