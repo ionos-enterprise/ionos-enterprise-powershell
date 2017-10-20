@@ -26,7 +26,7 @@ namespace ProfitBricks
         /// <summary>
         /// <para type="description">Location ID.</para>
         /// </summary>
-        [Parameter(HelpMessage ="Location Id",Position =0,ValueFromPipeline = true)]
+        [Parameter(HelpMessage = "Location Id", Position = 0, ValueFromPipeline = true)]
         public string LocationId { get; set; }
 
         #endregion
@@ -42,11 +42,13 @@ namespace ProfitBricks
                     {
                         var location = locationApi.FindById(LocationId, depth: 5);
                         WriteObject(location);
-                    }else
+                    }
+                    else
                     {
                         WriteWarning("Location Id must consist of region name and location name separated by '/' for example   us/las ");
                     }
-                }else
+                }
+                else
                 {
                     var locations = locationApi.FindAll(depth: 5);
 

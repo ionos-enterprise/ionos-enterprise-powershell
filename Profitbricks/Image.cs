@@ -19,14 +19,14 @@ namespace ProfitBricks
     /// </example>
     [Cmdlet(VerbsCommon.Get, "PBImage")]
     [OutputType(typeof(Image))]
-    public class GetImage :Cmdlet
+    public class GetImage : Cmdlet
     {
         #region Parameters
 
         /// <summary>
         /// <para type="description">Image ID.</para>
         /// </summary>
-        [Parameter(HelpMessage ="Image Id", Position = 0, ValueFromPipeline = true)]
+        [Parameter(HelpMessage = "Image Id", Position = 0, ValueFromPipeline = true)]
         public string ImageId { get; set; }
 
         #endregion
@@ -49,7 +49,8 @@ namespace ProfitBricks
 
                     WriteObject(images.Items);
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 WriteError(new ErrorRecord(ex, "", ErrorCategory.NotSpecified, null));
             }

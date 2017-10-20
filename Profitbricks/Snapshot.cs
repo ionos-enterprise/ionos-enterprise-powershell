@@ -193,67 +193,67 @@ namespace ProfitBricks
         public string Description { get; set; }
 
         /// <summary>
-        /// <para type="description">This volume is capable of CPU hot plug (no reboot required).	</para>
+        /// <para type="description">This volume is capable of CPU hot plug (no reboot required).</para>
         /// </summary>
         [Parameter(Position = 3, ValueFromPipeline = true)]
         public bool? CpuHotPlug { get; set; }
 
         /// <summary>
-        /// <para type="description">This volume is capable of CPU hot unplug (no reboot required).	</para>
+        /// <para type="description">This volume is capable of CPU hot unplug (no reboot required).</para>
         /// </summary>
         [Parameter(Position = 4, ValueFromPipeline = true)]
         public bool? CpuHotUnplug { get; set; }
 
         /// <summary>
-        /// <para type="description">This volume is capable of RAM hot plug (no reboot required).	</para>
+        /// <para type="description">This volume is capable of RAM hot plug (no reboot required).</para>
         /// </summary>
         [Parameter(Position = 5, ValueFromPipeline = true)]
         public bool? RamHotPlug { get; set; }
 
         /// <summary>
-        /// <para type="description">This volume is capable of RAM hot unplug (no reboot required).	</para>
+        /// <para type="description">This volume is capable of RAM hot unplug (no reboot required).</para>
         /// </summary>
         [Parameter(Position = 6, ValueFromPipeline = true)]
         public bool? RamHotUnplug { get; set; }
 
         /// <summary>
-        /// <para type="description">This volume is capable of NIC hot plug (no reboot required).	</para>
+        /// <para type="description">This volume is capable of NIC hot plug (no reboot required).</para>
         /// </summary>
         [Parameter(Position = 7, ValueFromPipeline = true)]
         public bool? NicHotPlug { get; set; }
 
         /// <summary>
-        /// <para type="description">This volume is capable of NIC hot unplug (no reboot required).	</para>
+        /// <para type="description">This volume is capable of NIC hot unplug (no reboot required).</para>
         /// </summary>
         [Parameter(Position = 8, ValueFromPipeline = true)]
         public bool? NicHotUnplug { get; set; }
 
         /// <summary>
-        /// <para type="description">This volume is capable of Virt-IO drive hot plug (no reboot required).	</para>
+        /// <para type="description">This volume is capable of Virt-IO drive hot plug (no reboot required).</para>
         /// </summary>
         [Parameter(Position = 9, ValueFromPipeline = true)]
         public bool? DiscVirtioHotPlug { get; set; }
 
         /// <summary>
-        /// <para type="description">This volume is capable of Virt-IO drive hot unplug (no reboot required).	</para>
+        /// <para type="description">This volume is capable of Virt-IO drive hot unplug (no reboot required).</para>
         /// </summary>
         [Parameter(Position = 10, ValueFromPipeline = true)]
         public bool? DiscVirtioHotUnplug { get; set; }
 
         /// <summary>
-        /// <para type="description">This volume is capable of SCSI drive hot plug (no reboot required).	</para>
+        /// <para type="description">This volume is capable of SCSI drive hot plug (no reboot required).</para>
         /// </summary>
         [Parameter(Position = 11, ValueFromPipeline = true)]
         public bool? DiscScsiHotPlug { get; set; }
 
         /// <summary>
-        /// <para type="description">This volume is capable of SCSI drive hot unplug (no reboot required).	</para>
+        /// <para type="description">This volume is capable of SCSI drive hot unplug (no reboot required).</para>
         /// </summary>
         [Parameter(Position = 12, ValueFromPipeline = true)]
         public bool? DiscScsiHotUnplug { get; set; }
 
         /// <summary>
-        /// <para type="description">The snapshot's license type: LINUX, WINDOWS, or UNKNOWN.	</para>
+        /// <para type="description">The snapshot's license type: LINUX, WINDOWS, WINDOWS2016 or UNKNOWN.</para>
         /// </summary>
         [Parameter(Position = 13, ValueFromPipeline = true)]
         public string LicenceType { get; private set; }

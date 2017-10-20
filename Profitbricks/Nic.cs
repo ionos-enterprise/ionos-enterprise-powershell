@@ -292,7 +292,7 @@ namespace ProfitBricks
                 {
                     newProps.Ips = Ips;
                 }
-                if(LanId != 0)
+                if (LanId != 0)
                 {
                     newProps.Lan = LanId;
                 }

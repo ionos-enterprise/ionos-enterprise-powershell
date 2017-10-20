@@ -90,7 +90,7 @@ namespace ProfitBricks
         /// <summary>
         /// <para type="description">Boolean indicating if the LAN faces the public Internet or not.</para>
         /// </summary>
-        [Parameter(Position = 1, HelpMessage = "Boolean indicating if the LAN faces the public Internet or not.", ValueFromPipeline = true)]
+        [Parameter(Position = 2, HelpMessage = "Boolean indicating if the LAN faces the public Internet or not.", ValueFromPipeline = true)]
         public bool? Public { get; set; }
 
         #endregion
@@ -142,7 +142,7 @@ namespace ProfitBricks
         /// </summary>
         [Parameter(Position = 1, HelpMessage = "LAN Id", Mandatory = true, ValueFromPipeline = true)]
         public string LanId { get; set; }
-        
+
         #endregion
         protected override void BeginProcessing()
         {
@@ -197,22 +197,30 @@ namespace ProfitBricks
         [Parameter(Position = 3, HelpMessage = "Boolean indicating if the LAN faces the public Internet or not.", ValueFromPipeline = true)]
         public bool? Public { get; set; }
 
+        /// <summary>
+        /// <para type="description">Collection for ip failover group.</para>
+        /// </summary>
+        [Parameter(Position = 4, HelpMessage = "Collection for ip failover group.", ValueFromPipeline = true)]
+        public List<IpFailover> IpFailover { get; set; }
+
         #endregion
         protected override void BeginProcessing()
         {
             try
             {
                 var lanApi = new LanApi(Utilities.Configuration);
-                var newProps = new LanProperties { Public = this.Public};
+                var newProps = new LanProperties { Public = this.Public };
+
+                newProps.IpFailover = this.IpFailover;
 
                 if (!string.IsNullOrEmpty(Name))
                 {
                     newProps.Name = Name;
                 }
 
-                var resp = lanApi.PartialUpdate(DataCenterId, LanId,newProps);
+                var resp = lanApi.PartialUpdate(DataCenterId, LanId, newProps);
 
-                WriteObject("Lan successfully removed.");
+                WriteObject(resp);
             }
             catch (Exception ex)
             {

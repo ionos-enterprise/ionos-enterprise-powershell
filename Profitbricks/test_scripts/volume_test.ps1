@@ -18,36 +18,25 @@ $dcstatus.Metadata.MEssage
 
 $datacenter = Get-PBDatacenter $newDc.Id
 
-$newServer = New-PBServer -DataCenterId $datacenter.Id -Name "server_test" -Cores 1 -Ram 1024 
+$newServer = New-PBServer -DataCenterId $datacenter.Id -Name "server_test" -ImageAlias "ubuntu:latest" -Password "Vol44lias" -Cores 1 -Ram 1073741824 -PublicIp 0 -StaticIp 1
+start-sleep -seconds 30
 
-Do{
-"Waiting on server to provision"
+$images = Get-PBImage
+$images = $images | Where-Object {$_.Properties.ImageType -eq 'HDD' -and $_.Properties.LicenceType -eq 'LINUX' -and $_.Properties.Location -eq 'us/las' -and $_.Properties.Public -eq 1}
+$image = $images[0]
+start-sleep -seconds 10
 
-$serverstatus = Get-PBRequestStatus -RequestUrl $newServer.Request
-
- start-sleep -seconds 5
-}While($serverstatus.Metadata.Status -ne "DONE")
-
-$newvolume = New-PBVolume -DataCenterId $datacenter.Id -Size 5 -Type HDD -ImageId 646023fb-f7bd-11e5-b7e8-52540005ab80 -Name "test_volume"
-
-
-Do{
-"Waiting on volume to provision"
-
-$volumestatus = Get-PBRequestStatus -RequestUrl $newvolume.Request
-
- start-sleep -seconds 5
-}While($volumestatus.Metadata.Status -ne "DONE")
+$newvolume = New-PBVolume -DataCenterId $datacenter.Id -Size 20 -Type HDD -ImageId $image.Id -Name "test_volume" -ImagePassword "Vol44lias" -AvailabilityZone "AUTO"
+start-sleep -seconds 20
+"New volume add with id "+$newvolume.Id
 
 $newname = $newvolume.Properties.Name + "updated"
 
 $updatedvolume = Set-PBVolume -DataCenterId $datacenter.Id -VolumeId $newvolume.Id -Name $newname
 
-start-sleep -seconds 10
-
 $volume = Get-PBVolume -DataCenterId $datacenter.Id -VolumeId $newvolume.Id
 
-if($volume.Properties.Name -eq $newname){
+if($updatedvolume.Properties.Name -eq $newname){
 "Update - Check"
 }
 else
@@ -57,7 +46,7 @@ else
 
 #connect the volume
 $connectedvolume = Connect-PBVolume -DataCenterId $datacenter.Id -ServerId $newServer.Id -VolumeId $volume.Id
-
+start-sleep -seconds 30
 Do{
 "Waiting on volume to conect"
 
@@ -77,7 +66,7 @@ else
 "It failed"
 }
 
-Detach-PBVolume -DataCenterId $datacenter.Id -ServerId $newServer.Id -VolumeId $connectedvolume.Id
+Disconnect-PBVolume -DataCenterId $datacenter.Id -ServerId $newServer.Id -VolumeId $connectedvolume.Id
 
 Remove-PBDatacenter -DatacenterId $datacenter.Id
 

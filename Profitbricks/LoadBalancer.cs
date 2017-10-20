@@ -32,7 +32,7 @@ namespace ProfitBricks
         /// <para type="description">Loadbalancer ID.</para>
         /// </summary>
         [Parameter(Position = 1, HelpMessage = "Loadbalancer Id", ValueFromPipeline = true)]
-        public string LoadbalancerId { get; set; } 
+        public string LoadbalancerId { get; set; }
 
         #endregion
 
@@ -78,23 +78,23 @@ namespace ProfitBricks
         /// <summary>
         /// <para type="description">Virtual data center ID. Mandatory parameter.</para>
         /// </summary>
-        [Parameter(Position = 0,HelpMessage = "Virtual data center ID", Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Position = 0, HelpMessage = "Virtual data center ID", Mandatory = true, ValueFromPipeline = true)]
         public string DataCenterId { get; set; }
 
         /// <summary>
         /// <para type="description">Load balancer name. Mandatory parameter.</para>
         /// </summary>
-        [Parameter(Position = 1,HelpMessage = "Loadbalancer Name", Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Position = 1, HelpMessage = "Loadbalancer Name", Mandatory = true, ValueFromPipeline = true)]
         public string Name { get; set; }
 
         /// <summary>
-        /// <para type="description">IPv4 address of the load balancer. All connected NICs will inherit this IP.	</para>
+        /// <para type="description">IPv4 address of the load balancer. All connected NICs will inherit this IP.</para>
         /// </summary>
         [Parameter(Position = 2, HelpMessage = "IPv4 address of the loadbalancer.", ValueFromPipeline = true)]
         public string Ip { get; set; }
 
         /// <summary>
-        /// <para type="description">Indicates if the load balancer will reserve an IP using DHCP.	</para>
+        /// <para type="description">Indicates if the load balancer will reserve an IP using DHCP.</para>
         /// </summary>
         [Parameter(Position = 3, HelpMessage = "Indicates if the loadbalancer will reserve an IP using DHCP.", ValueFromPipeline = true)]
         public bool? Dhcp { get; set; }
@@ -203,15 +203,15 @@ namespace ProfitBricks
         public string Name { get; set; }
 
         /// <summary>
-        /// <para type="description">The IP of the load balancer.	</para>
+        /// <para type="description">The IP of the load balancer.</para>
         /// </summary>
-        [Parameter(Position = 3, HelpMessage = "The IP of the loadbalancer.	", ValueFromPipeline = true)]
+        [Parameter(Position = 3, HelpMessage = "The IP of the loadbalancer.", ValueFromPipeline = true)]
         public string Ip { get; set; }
 
         /// <summary>
         /// <para type="description">Indicates if the load balancer will reserve an IP using DHCP.</para>
         /// </summary>
-        [Parameter(Position =  4,HelpMessage = "Indicates if the loadbalancer will reserve an IP using DHCP.")]
+        [Parameter(Position = 4, HelpMessage = "Indicates if the loadbalancer will reserve an IP using DHCP.")]
         public bool? Dhcp { get; set; }
         #endregion
 
