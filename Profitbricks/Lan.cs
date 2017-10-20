@@ -198,9 +198,9 @@ namespace ProfitBricks
         public bool? Public { get; set; }
 
         /// <summary>
-        /// <para type="description">Collection for ip failover group.</para>
+        /// <para type="description">Collection for IP failover group.</para>
         /// </summary>
-        [Parameter(Position = 4, HelpMessage = "Collection for ip failover group.", ValueFromPipeline = true)]
+        [Parameter(Position = 4, HelpMessage = "Collection for IP failover group.", ValueFromPipeline = true)]
         public List<IpFailover> IpFailover { get; set; }
 
         #endregion
