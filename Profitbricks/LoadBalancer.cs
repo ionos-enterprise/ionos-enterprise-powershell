@@ -88,13 +88,13 @@ namespace ProfitBricks
         public string Name { get; set; }
 
         /// <summary>
-        /// <para type="description">IPv4 address of the load balancer. All connected NICs will inherit this IP.	</para>
+        /// <para type="description">IPv4 address of the load balancer. All connected NICs will inherit this IP.</para>
         /// </summary>
         [Parameter(Position = 2, HelpMessage = "IPv4 address of the loadbalancer.", ValueFromPipeline = true)]
         public string Ip { get; set; }
 
         /// <summary>
-        /// <para type="description">Indicates if the load balancer will reserve an IP using DHCP.	</para>
+        /// <para type="description">Indicates if the load balancer will reserve an IP using DHCP.</para>
         /// </summary>
         [Parameter(Position = 3, HelpMessage = "Indicates if the loadbalancer will reserve an IP using DHCP.", ValueFromPipeline = true)]
         public bool? Dhcp { get; set; }
@@ -203,9 +203,9 @@ namespace ProfitBricks
         public string Name { get; set; }
 
         /// <summary>
-        /// <para type="description">The IP of the load balancer.	</para>
+        /// <para type="description">The IP of the load balancer.</para>
         /// </summary>
-        [Parameter(Position = 3, HelpMessage = "The IP of the loadbalancer.	", ValueFromPipeline = true)]
+        [Parameter(Position = 3, HelpMessage = "The IP of the loadbalancer.", ValueFromPipeline = true)]
         public string Ip { get; set; }
 
         /// <summary>
