@@ -32,7 +32,7 @@ namespace ProfitBricks
         /// <para type="description">Loadbalancer ID.</para>
         /// </summary>
         [Parameter(Position = 1, HelpMessage = "Loadbalancer Id", ValueFromPipeline = true)]
-        public string LoadbalancerId { get; set; } 
+        public string LoadbalancerId { get; set; }
 
         #endregion
 
@@ -78,13 +78,13 @@ namespace ProfitBricks
         /// <summary>
         /// <para type="description">Virtual data center ID. Mandatory parameter.</para>
         /// </summary>
-        [Parameter(Position = 0,HelpMessage = "Virtual data center ID", Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Position = 0, HelpMessage = "Virtual data center ID", Mandatory = true, ValueFromPipeline = true)]
         public string DataCenterId { get; set; }
 
         /// <summary>
         /// <para type="description">Load balancer name. Mandatory parameter.</para>
         /// </summary>
-        [Parameter(Position = 1,HelpMessage = "Loadbalancer Name", Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Position = 1, HelpMessage = "Loadbalancer Name", Mandatory = true, ValueFromPipeline = true)]
         public string Name { get; set; }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace ProfitBricks
         /// <summary>
         /// <para type="description">Indicates if the load balancer will reserve an IP using DHCP.</para>
         /// </summary>
-        [Parameter(Position =  4,HelpMessage = "Indicates if the loadbalancer will reserve an IP using DHCP.")]
+        [Parameter(Position = 4, HelpMessage = "Indicates if the loadbalancer will reserve an IP using DHCP.")]
         public bool? Dhcp { get; set; }
         #endregion
 
