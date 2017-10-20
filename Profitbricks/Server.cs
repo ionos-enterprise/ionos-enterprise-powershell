@@ -106,15 +106,15 @@ namespace ProfitBricks
         public string ImageId { get; set; }
 
         /// <summary>
-        /// <para type="description">Sets Public Ip address for the server.</para>
+        /// <para type="description">Sets public IP address for the server.</para>
         /// </summary>
-        [Parameter(Position = 5, HelpMessage = "Sets public Ip address for the server.", Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Position = 5, HelpMessage = "Sets public IP address for the server.", Mandatory = true, ValueFromPipeline = true)]
         public bool PublicIp { get; set; }
 
         /// <summary>
-        /// <para type="description">Sets Public Ip address for the server.</para>
+        /// <para type="description">Sets public IP address for the server.</para>
         /// </summary>
-        [Parameter(Position = 6, HelpMessage = "Sets static Ip address for the server.", Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Position = 6, HelpMessage = "Sets static IP address for the server.", Mandatory = true, ValueFromPipeline = true)]
         public bool StaticIp { get; set; }
 
         /// <summary>
