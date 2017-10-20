@@ -90,12 +90,12 @@ namespace ProfitBricks
         /// <summary>
         /// <para type="description">Boolean indicating if the LAN faces the public Internet or not.</para>
         /// </summary>
-        [Parameter(Position = 1, HelpMessage = "Boolean indicating if the LAN faces the public Internet or not.", ValueFromPipeline = true)]
+        [Parameter(Position = 2, HelpMessage = "Boolean indicating if the LAN faces the public Internet or not.", ValueFromPipeline = true)]
         public bool? Public { get; set; }
 
-        #endregion
+		#endregion
 
-        protected override void BeginProcessing()
+		protected override void BeginProcessing()
         {
             try
             {
@@ -103,12 +103,12 @@ namespace ProfitBricks
 
                 var newProps = new LanProperties { Public = this.Public };
 
-                if (!string.IsNullOrEmpty(Name))
+				if (!string.IsNullOrEmpty(Name))
                 {
                     newProps.Name = Name;
                 }
 
-                var newLan = lanApi.Create(DataCenterId, new Lan { Properties = newProps });
+				var newLan = lanApi.Create(DataCenterId, new Lan { Properties = newProps });
 
                 WriteObject(newLan);
             }
@@ -197,46 +197,30 @@ namespace ProfitBricks
         [Parameter(Position = 3, HelpMessage = "Boolean indicating if the LAN faces the public Internet or not.", ValueFromPipeline = true)]
         public bool? Public { get; set; }
 
-        /// <summary>
-        /// <para type="description">Ip for ip failover</para>
-        /// </summary>
-        [Parameter(Position = 4, HelpMessage = "Ip for ip failover", ValueFromPipeline = true)]
-        public string IpFailoverIp { get; set; }
+		/// <summary>
+		/// <para type="description">Collection for ip failover group.</para>
+		/// </summary>
+		[Parameter(Position = 4, HelpMessage = "Collection for ip failover group.", ValueFromPipeline = true)]
+		public List<IpFailover> IpFailover { get; set; }
 
-        /// <summary>
-        /// <para type="description">NicId for ip failover</para>
-        /// </summary>
-        [Parameter(Position = 4, HelpMessage = "Nic id for ip failover", ValueFromPipeline = true)]
-        public string NicIdIpFailover { get; set; }
-
-        #endregion
-        protected override void BeginProcessing()
+		#endregion
+		protected override void BeginProcessing()
         {
             try
             {
                 var lanApi = new LanApi(Utilities.Configuration);
                 var newProps = new LanProperties { Public = this.Public };
 
-                if (!String.IsNullOrEmpty(this.IpFailoverIp) && !String.IsNullOrEmpty(this.NicIdIpFailover))
-                {
-                    List<IpFailover> ipFailovers = new List<IpFailover>();
-                    ipFailovers.Add(new IpFailover()
-                    {
-                        Ip = this.IpFailoverIp,
-                        NicUuid = this.NicIdIpFailover
-                    });
+				newProps.IpFailover = this.IpFailover;
 
-                    newProps.IpFailover = ipFailovers;
-                }
-
-                if (!string.IsNullOrEmpty(Name))
+				if (!string.IsNullOrEmpty(Name))
                 {
                     newProps.Name = Name;
                 }
 
                 var resp = lanApi.PartialUpdate(DataCenterId, LanId, newProps);
 
-                WriteObject("Lan successfully removed.");
+                WriteObject(resp);
             }
             catch (Exception ex)
             {

@@ -30,7 +30,8 @@ $nicstatus = Get-PBRequestStatus -RequestUrl $newNic.Request
  start-sleep -seconds 5
 }While($nicstatus.Metadata.Status -ne "DONE")
 
-$updatedLan = Set-PBLan -DataCenterId $newDc.Id -LanId $newLan.Id -Name "test_lan" -Public $true -IpFailoverIp $ip_block.Properties.Ips[0] -NicIdIpFailover $newNic.Id
+$ipFailovers = @([pscustomobject]@{Ip=$ip_block.Properties.Ips[0];NicUuid=$newNic.Id})
+$updatedLan = Set-PBLan -DataCenterId $newDc.Id -LanId $newLan.Id -Name "test_lan" -Public $true -IpFailover $ipFailovers
 
 start-sleep -seconds 20
 
@@ -38,9 +39,8 @@ $newServer2 = New-PBServer -DataCenterId $newDc.Id -Name "server_test_ps_2" -Dis
 
 $newNic2 = New-PBNic -DataCenterId $newDc.Id -ServerId $newServer2.Id -LanId $newLan.Id -Ips $ip_block.Properties.Ips
 
-Remove-PBDatacenter -DatacenterId $newDc.Id 
+Remove-PBDatacenter -DatacenterId $newDc.Id
 start-sleep -seconds 120
-
 Remove-PBIPBlock -IpBlockId $ip_block.Id
 
 Remove-Module Profitbricks
