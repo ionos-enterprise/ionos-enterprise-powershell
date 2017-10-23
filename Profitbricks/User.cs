@@ -268,9 +268,9 @@ namespace ProfitBricks
     /// <para type="synopsis">This commandlet will list users from the goup.</para>
     /// </summary>
     /// <example>
-    /// <para type="description">ListUserGroup-PBUser -GroupId [UUID]</para>
+    /// <para type="description">Get-PBGroupMember -GroupId [UUID]</para>
     /// </example>
-    [Cmdlet("ListUserGroup", "PBUser")]
+    [Cmdlet("Get", "PBGroupMember")]
     [OutputType(typeof(User))]
     public class ListUserGroup : Cmdlet
     {
@@ -299,9 +299,9 @@ namespace ProfitBricks
     /// <para type="synopsis">This commandlet will add user to the group.</para>
     /// </summary>
     /// <example>
-    /// <para type="description">AddToGroup-PBUser -GroupId [UUID] -UserId [UUID]</para>
+    /// <para type="description">Add-PBGroupMember -GroupId [UUID] -UserId [UUID]</para>
     /// </example>
-    [Cmdlet("AddToGroup", "PBUser")]
+    [Cmdlet("Add", "PBGroupMember")]
     [OutputType(typeof(User))]
     public class AddUserToGroup : Cmdlet
     {
@@ -341,9 +341,9 @@ namespace ProfitBricks
     /// <para type="synopsis">This commandlet will remove user from the group.</para>
     /// </summary>
     /// <example>
-    /// <para type="description">RemoveFromGroup-PBUser -GroupId [UUID] -UserId [UUID]</para>
+    /// <para type="description">Remove-PBGroupMember -GroupId [UUID] -UserId [UUID]</para>
     /// </example>
-    [Cmdlet("RemoveFromGroup", "PBUser")]
+    [Cmdlet("Remove", "PBGroupMember")]
     [OutputType(typeof(User))]
     public class RemoveUserFromGroup : Cmdlet
     {

@@ -38,9 +38,9 @@ else
 
 $newGroup = New-PBGroup -Name "test_ps_1" -CreateDataCenter 1
 
-AddToGroup-PBUser -GroupId $newGroup.Id -UserId $newUser.Id
+Add-PBGroupMember -GroupId $newGroup.Id -UserId $newUser.Id
 
-RemoveFromGroup-PBUser -GroupId $newGroup.Id -UserId $newUser.Id
+Remove-PBGroupMember -GroupId $newGroup.Id -UserId $newUser.Id
 
 Remove-PBUser -UserId $newUser.Id
 
