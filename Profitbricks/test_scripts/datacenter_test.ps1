@@ -8,13 +8,13 @@ $credentials = Get-Credential $Credentials
 
 Set-Profitbricks $credentials
 
-$newDc = New-PBDatacenter -Name "test_ps_1" -Description "PS Unit Testing" -Location "us/las"
+$newDc = New-PBDatacenter -Name "PowerShell SDK Test" -Description "PowerShell SDK Test datacenter" -Location "us/las"
 
 $datacenter = Get-PBDatacenter $newDc.Id
 
 $old_name = $datacenters.Properties.Name
 
-$new_name =  "test_ps"
+$new_name =  "PowerShell SDK Test RENAME"
 
 $s = Set-PBDatacenter -DatacenterId $datacenter.Id -Name  $new_name
 

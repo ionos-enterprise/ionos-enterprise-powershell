@@ -8,7 +8,7 @@ $credentials = Get-Credential $Credentials
 
 Set-Profitbricks $credentials
 
-$newDc = New-PBDatacenter -Name "test_ps_1" -Description "PS Unit Testing" -Location "us/las"
+$newDc = New-PBDatacenter -Name "PowerShell SDK Test" -Description "PowerShell SDK Test datacenter" -Location "us/las"
 
 $dcstatus = get-PBRequestStatus -RequestUrl $newDc.Request
 
@@ -18,12 +18,12 @@ $dcstatus.Metadata.MEssage
 
 $datacenter = Get-PBDatacenter $newDc.Id
 
-$newServer = New-PBServer -DataCenterId $datacenter.Id -Name "server_test" -ImageAlias "ubuntu:latest" -Password "Vol44lias" -Cores 1 -Ram 1073741824 -PublicIp 0 -StaticIp 1
+$newServer = New-PBServer -DataCenterId $datacenter.Id -Name "PowerShell SDK Test" -ImageAlias "ubuntu:latest" -Password "Vol44lias" -Cores 1 -Ram 1073741824 -PublicIp 0 -StaticIp 1
 start-sleep -seconds 30
 
 $server = Get-PBServer -DataCenterId $newDc.Id -ServerId $newServer.Id
 
-$new_name = $server.Properties.Name + "updated"
+$new_name = $server.Properties.Name + " RENAME"
 
 $updatedServer = Set-PBServer -DataCenterId $datacenter.Id -ServerId $server.Id -Name $new_name
 

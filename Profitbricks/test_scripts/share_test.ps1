@@ -8,7 +8,7 @@ $credentials = Get-Credential $Credentials
 
 Set-Profitbricks $credentials
 
-$newGroup = New-PBGroup -Name "test_ps_1" -CreateDataCenter 1
+$newGroup = New-PBGroup -Name "PowerShell SDK Test" -CreateDataCenter 1
 
 $groupStatus = get-PBRequestStatus -RequestUrl $newGroup.Request
 
@@ -16,7 +16,7 @@ $groupStatus = get-PBRequestStatus -RequestUrl $newGroup.Request
 $groupStatus.Metadata.Status
 $groupStatus.Metadata.Message
 
-$datacenter = New-PBDatacenter -Name "test_ps_1" -Description "PS Unit Testing" -Location "us/las"
+$datacenter = New-PBDatacenter -Name "PowerShell SDK Test" -Description "PowerShell SDK Test datacenter" -Location "us/las"
 "Datacenter created"
 
 $share = New-PBShare -GroupId $newGroup.Id -ResourceId $datacenter.id -EditPrivilege 1

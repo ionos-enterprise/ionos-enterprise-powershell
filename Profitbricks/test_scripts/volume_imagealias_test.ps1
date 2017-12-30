@@ -8,9 +8,9 @@ $credentials = Get-Credential $Credentials
 
 Set-Profitbricks $credentials
 
-$newDc = New-PBDatacenter -Name "test_ps_22" -Description "PS Unit Testing" -Location "us/las"
+$newDc = New-PBDatacenter -Name "PowerShell SDK Test" -Description "PowerShell SDK Test datacenter" -Location "us/las"
 
-$newServer = New-PBServer -DataCenterId $newDc.Id -Name "server_test_ps" -DiskType "HDD" -ImageAlias "ubuntu:latest" -Password "Vol44lias" -Cores 1 -Ram 1073741824 -PublicIp 0 -StaticIp 1
+$newServer = New-PBServer -DataCenterId $newDc.Id -Name "PowerShell SDK Test" -DiskType "HDD" -ImageAlias "ubuntu:latest" -Password "Vol44lias" -Cores 1 -Ram 1073741824 -PublicIp 0 -StaticIp 1
 
 start-sleep -seconds 30
 
