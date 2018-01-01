@@ -8,7 +8,7 @@ $credentials = Get-Credential $Credentials
 
 Set-Profitbricks $credentials
 
-$newDc = New-PBDatacenter -Name "load balancer test" -Description "PS Unit Testing" -Location "us/las"
+$newDc = New-PBDatacenter -Name "PowerShell SDK Test" -Description "PowerShell SDK Test datacenter" -Location "us/las"
 
 $dcstatus = get-PBRequestStatus -RequestUrl $newDc.Request
 
@@ -18,7 +18,7 @@ $dcstatus.Metadata.MEssage
 
 $datacenter = Get-PBDatacenter $newDc.Id
 
-    $loadbalancer = New-PBLoadbalancer -DataCenterId $datacenter.Id -Name "test LB"
+    $loadbalancer = New-PBLoadbalancer -DataCenterId $datacenter.Id -Name "PowerShell SDK Test"
 
 
 Do{
@@ -30,7 +30,7 @@ $status = Get-PBRequestStatus -RequestUrl $loadbalancer.Request
 }While($status.Metadata.Status -ne "DONE")
 
 
-$newname = $loadbalancer.Properties.Name + "updated"
+$newname = $loadbalancer.Properties.Name + " RENAME"
 
 $updated = Set-PBLoadbalancer -DataCenterId $datacenter.Id -LoadbalancerId $loadbalancer.Id -Name $newname
 
@@ -42,16 +42,16 @@ else{
 }
 
 
-$newServer = New-PBServer -DataCenterId $datacenter.Id -Name "server_test" -ImageAlias "ubuntu:latest" -Password "Vol44lias" -Cores 1 -Ram 1073741824 -PublicIp 0 -StaticIp 1
+$newServer = New-PBServer -DataCenterId $datacenter.Id -Name "PowerShell SDK Test" -ImageAlias "ubuntu:latest" -Password "Vol44lias" -Cores 1 -Ram 1073741824 -PublicIp 0 -StaticIp 1
 start-sleep -seconds 30
 
 $server = Get-PBServer -DataCenterId $newDc.Id -ServerId $newServer.Id
 
 
-$nic = New-PBNic -DataCenterId $datacenter.Id -ServerId $server.Id -LanId 1 -Name "Test"
+$nic = New-PBNic -DataCenterId $datacenter.Id -ServerId $server.Id -LanId 1 -Name "PowerShell SDK Test"
  start-sleep -seconds 30
 
- $newname = $nic.Properties.Name + "updated"
+ $newname = $nic.Properties.Name + " RENAME"
 
  $updatedNic = Set-PBNic -DataCenterId $datacenter.Id -ServerId $server.Id -NicId $nic.Id -Name $newname
  start-sleep -seconds 10

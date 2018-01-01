@@ -8,7 +8,7 @@ $credentials = Get-Credential $Credentials
 
 Set-Profitbricks $credentials
 
-$newDc = New-PBDatacenter -Name "test_ps_1" -Description "PS Unit Testing" -Location "us/las"
+$newDc = New-PBDatacenter -Name "PowerShell SDK Test" -Description "PowerShell SDK Test datacenter" -Location "us/las"
 
 $dcstatus = get-PBRequestStatus -RequestUrl $newDc.Request
 
@@ -24,21 +24,21 @@ $image = $images[0]
 start-sleep -seconds 10
 
 
-$newvolume = New-PBVolume -DataCenterId $datacenter.Id -Size 20 -Type HDD -ImageId $image.Id -Name "test_volume" -ImagePassword "Vol44lias" -AvailabilityZone "AUTO"
+$newvolume = New-PBVolume -DataCenterId $datacenter.Id -Size 20 -Type HDD -ImageId $image.Id -Name "PowerShell SDK Test" -ImagePassword "Vol44lias" -AvailabilityZone "AUTO"
 Start-Sleep -Seconds 20
 Do{
 "Waiting on volume to provision"
 
 $volumestatus = Get-PBRequestStatus -RequestUrl $newvolume.Request
 
- start-sleep -seconds 5
+ start-sleep -seconds 10
 }While($volumestatus.Metadata.Status -ne "DONE")
 
-New-PBSnapshot -DatacenterId $datacenter.Id -VolumeId $newvolume.Id -Name "test snapshot"
+New-PBSnapshot -DatacenterId $datacenter.Id -VolumeId $newvolume.Id -Name "PowerShell SDK Test"
 
 Start-Sleep -Seconds 60
 
-$newname = $newvolume.Properties.Name + "updated"
+$newname = $newvolume.Properties.Name + " RENAME"
 
 $snapshots = Get-PBSnapshot 
  

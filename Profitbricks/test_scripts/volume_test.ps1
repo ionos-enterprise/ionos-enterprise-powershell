@@ -8,7 +8,7 @@ $credentials = Get-Credential $Credentials
 
 Set-Profitbricks $credentials
 
-$newDc = New-PBDatacenter -Name "test_ps_1" -Description "PS Unit Testing" -Location "us/las"
+$newDc = New-PBDatacenter -Name "PowerShell SDK Test" -Description "PowerShell SDK Test datacenter" -Location "us/las"
 
 $dcstatus = get-PBRequestStatus -RequestUrl $newDc.Request
 
@@ -18,7 +18,7 @@ $dcstatus.Metadata.MEssage
 
 $datacenter = Get-PBDatacenter $newDc.Id
 
-$newServer = New-PBServer -DataCenterId $datacenter.Id -Name "server_test" -ImageAlias "ubuntu:latest" -Password "Vol44lias" -Cores 1 -Ram 1073741824 -PublicIp 0 -StaticIp 1
+$newServer = New-PBServer -DataCenterId $datacenter.Id -Name "PowerShell SDK Test" -ImageAlias "ubuntu:latest" -Password "Vol44lias" -Cores 1 -Ram 1073741824 -PublicIp 0 -StaticIp 1
 start-sleep -seconds 30
 
 $images = Get-PBImage
@@ -26,11 +26,11 @@ $images = $images | Where-Object {$_.Properties.ImageType -eq 'HDD' -and $_.Prop
 $image = $images[0]
 start-sleep -seconds 10
 
-$newvolume = New-PBVolume -DataCenterId $datacenter.Id -Size 20 -Type HDD -ImageId $image.Id -Name "test_volume" -ImagePassword "Vol44lias" -AvailabilityZone "AUTO"
+$newvolume = New-PBVolume -DataCenterId $datacenter.Id -Size 20 -Type HDD -ImageId $image.Id -Name "PowerShell SDK Test" -ImagePassword "Vol44lias" -AvailabilityZone "AUTO"
 start-sleep -seconds 20
 "New volume add with id "+$newvolume.Id
 
-$newname = $newvolume.Properties.Name + "updated"
+$newname = $newvolume.Properties.Name + " RENAME"
 
 $updatedvolume = Set-PBVolume -DataCenterId $datacenter.Id -VolumeId $newvolume.Id -Name $newname
 

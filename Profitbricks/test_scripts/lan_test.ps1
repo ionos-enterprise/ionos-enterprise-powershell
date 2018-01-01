@@ -8,15 +8,15 @@ $credentials = Get-Credential $Credentials
 
 Set-Profitbricks $credentials
 
-$newDc = New-PBDatacenter -Name "test_ps_1" -Description "PS Unit Testing" -Location "us/las"
+$newDc = New-PBDatacenter -Name "PowerShell SDK Test" -Description "PowerShell SDK Test datacenter" -Location "us/las"
 
 $datacenter = Get-PBDatacenter $newDc.Id
 
 $old_name = $datacenter.Properties.Name
 
-$new_name =  "test_ps"
+$new_name =  "PowerShell SDK Test"
 
-$newLan = New-PBLan -DataCenterId $datacenter.Id -Name "test_lan" -Public $true 
+$newLan = New-PBLan -DataCenterId $datacenter.Id -Name "PowerShell SDK Test LAN" -Public $true
 
 
 Do{
@@ -24,10 +24,10 @@ Do{
 
 $status = Get-PBRequestStatus -RequestUrl $newLan.Request
 
- start-sleep -seconds 5
+ start-sleep -seconds 10
 }While($status.Metadata.Status -ne "DONE")
 
-$new_name = "test_lan_updated" 
+$new_name = "PowerShell SDK Test RENAME" 
 
 $l = Set-PBLan -DataCenterId $datacenter.Id -LanId $newLan.Id -Name $new_name
 

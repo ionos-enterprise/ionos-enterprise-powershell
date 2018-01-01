@@ -8,7 +8,7 @@ $credentials = Get-Credential $Credentials
 
 Set-Profitbricks $credentials
 
-$newDc = New-PBDatacenter -Name "test_ps_22" -Description "PS Unit Testing" -Location "us/las"
+$newDc = New-PBDatacenter -Name "PowerShell SDK Test" -Description "PowerShell SDK Test datacenter" -Location "us/las"
 start-sleep -seconds 30
 
 "Get all resources"

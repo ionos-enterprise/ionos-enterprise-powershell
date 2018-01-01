@@ -8,7 +8,7 @@ $credentials = Get-Credential $Credentials
 
 Set-Profitbricks $credentials
 
-$newGroup = New-PBGroup -Name "test_ps_1" -CreateDataCenter 1
+$newGroup = New-PBGroup -Name "PowerShell SDK Test" -CreateDataCenter 1
 
 $groupStatus = get-PBRequestStatus -RequestUrl $newGroup.Request
 
@@ -18,7 +18,7 @@ $groupStatus.Metadata.Message
 
 $group = Get-PBGroup $newGroup.Id
 
-$newname = $newGroup.Properties.Name + "updated"
+$newname = $newGroup.Properties.Name + " RENAME"
  
 $updatedgroup = Set-PBGroup -GroupId $group.Id -Name $newname
 

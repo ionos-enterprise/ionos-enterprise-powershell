@@ -8,10 +8,9 @@ $credentials = Get-Credential $Credentials
 
 Set-Profitbricks $credentials
 
-$email = "pstestuser"+(Get-Date).Ticks+"@example.com"
+$email = "noreply"+(Get-Date).Ticks+"@example.com"
 
-$newUser = New-PBUser -FirstName PSTest_FirstName -LastName PSTest_LastName -Email $email -Password pstestpass111
-
+$newUser = New-PBUser -FirstName "John" -LastName "Doe" -Email $email -Password "secretpassword123"
 $userStatus = get-PBRequestStatus -RequestUrl $newUser.Request
 
 "User status" 
@@ -20,15 +19,11 @@ $userStatus.Metadata.Message
 
 $user = Get-PBUser -UserId $newUser.Id
 
-$newuserfirstname = $user.Properties.FirstName + "_updated"
-$newuserlasttname = $user.Properties.Last + "_updated"
-$newuseremail = "update_" +$user.Properties.Email
-
-$updatedUser = Set-PBUser -UserId $newUser.Id -FirstName $newuserfirstname -LastName $newuserlasttname -Email $newuseremail
+$updatedUser = Set-PBUser -UserId $newUser.Id -FirstName "John" -LastName "Doe" -Email $email -Administrator $false
 
 start-sleep -seconds 10
 
-if($updatedUser.Properties.FirstName -eq $newuserfirstname){
+if(!$updatedUser.Properties.Administrator){
 "Update - Check"
 }
 else
@@ -36,7 +31,7 @@ else
 "Update failed"
 }
 
-$newGroup = New-PBGroup -Name "test_ps_1" -CreateDataCenter 1
+$newGroup = New-PBGroup -Name "PowerShell SDK Test" -CreateDataCenter 1
 
 Add-PBGroupMember -GroupId $newGroup.Id -UserId $newUser.Id
 
